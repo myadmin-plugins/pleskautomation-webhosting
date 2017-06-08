@@ -15,10 +15,10 @@ return [
 	'version' => '1.0.0',
 	'type' => 'licenses',
 	'hooks' => [
-		'function.requirements' => ['Detain\MyAdminPleskautomation\Plugin', 'Requirements'],
+		/*'function.requirements' => ['Detain\MyAdminPleskautomation\Plugin', 'Requirements'],
 		'licenses.settings' => ['Detain\MyAdminPleskautomation\Plugin', 'Settings'],
 		'licenses.activate' => ['Detain\MyAdminPleskautomation\Plugin', 'Activate'],
 		'licenses.change_ip' => ['Detain\MyAdminPleskautomation\Plugin', 'ChangeIp'],
-		'ui.menu' => ['Detain\MyAdminPleskautomation\Plugin', 'Menu']
+		'ui.menu' => ['Detain\MyAdminPleskautomation\Plugin', 'Menu'] */
 	],
 ];
