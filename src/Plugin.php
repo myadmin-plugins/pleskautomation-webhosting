@@ -87,7 +87,7 @@ class Plugin {
 		$settings = $event->getSubject();
 		$settings->add_text_setting('licenses', 'Pleskautomation', 'pleskautomation_username', 'Pleskautomation Username:', 'Pleskautomation Username', $settings->get_setting('FANTASTICO_USERNAME'));
 		$settings->add_text_setting('licenses', 'Pleskautomation', 'pleskautomation_password', 'Pleskautomation Password:', 'Pleskautomation Password', $settings->get_setting('FANTASTICO_PASSWORD'));
-		$settings->add_dropdown_setting('licenses', 'Pleskautomation', 'outofstock_licenses_pleskautomation', 'Out Of Stock Pleskautomation Licenses', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_LICENSES_FANTASTICO'), array('0', '1'), array('No', 'Yes', ));
+		$settings->add_dropdown_setting('licenses', 'Pleskautomation', 'outofstock_licenses_pleskautomation', 'Out Of Stock Pleskautomation Licenses', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_LICENSES_FANTASTICO'), array('0', '1'), array('No', 'Yes',));
 	}
 
 }
