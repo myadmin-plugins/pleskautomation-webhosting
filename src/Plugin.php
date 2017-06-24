@@ -25,7 +25,7 @@ class Plugin {
 	public static function getActivate(GenericEvent $event) {
 		$license = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_FANTASTICO) {
-			myadmin_log('licenses', 'info', 'Pleskautomation Activation', __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', 'Pleskautomation Activation', __LINE__, __FILE__);
 			function_requirements('activate_pleskautomation');
 			activate_pleskautomation($license->get_ip(), $event['field1']);
 			$event->stopPropagation();
@@ -35,12 +35,12 @@ class Plugin {
 	public static function getChangeIp(GenericEvent $event) {
 		if ($event['category'] == SERVICE_TYPES_FANTASTICO) {
 			$license = $event->getSubject();
-			$settings = get_module_settings('licenses');
+			$settings = get_module_settings(self::$module);
 			$pleskautomation = new Pleskautomation(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
-			myadmin_log('licenses', 'info', "IP Change - (OLD:".$license->get_ip().") (NEW:{$event['newip']})", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "IP Change - (OLD:".$license->get_ip().") (NEW:{$event['newip']})", __LINE__, __FILE__);
 			$result = $pleskautomation->editIp($license->get_ip(), $event['newip']);
 			if (isset($result['faultcode'])) {
-				myadmin_log('licenses', 'error', 'Pleskautomation editIp('.$license->get_ip().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
+				myadmin_log(self::$module, 'error', 'Pleskautomation editIp('.$license->get_ip().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
 				$event['status'] = 'error';
 				$event['status_text'] = 'Error Code '.$result['faultcode'].': '.$result['fault'];
 			} else {
@@ -55,11 +55,10 @@ class Plugin {
 
 	public static function getMenu(GenericEvent $event) {
 		$menu = $event->getSubject();
-		$module = 'licenses';
 		if ($GLOBALS['tf']->ima == 'admin') {
-			$menu->add_link($module, 'choice=none.reusable_pleskautomation', 'icons/database_warning_48.png', 'ReUsable Pleskautomation Licenses');
-			$menu->add_link($module, 'choice=none.pleskautomation_list', 'icons/database_warning_48.png', 'Pleskautomation Licenses Breakdown');
-			$menu->add_link($module.'api', 'choice=none.pleskautomation_licenses_list', 'whm/createacct.gif', 'List all Pleskautomation Licenses');
+			$menu->add_link(self::$module, 'choice=none.reusable_pleskautomation', 'icons/database_warning_48.png', 'ReUsable Pleskautomation Licenses');
+			$menu->add_link(self::$module, 'choice=none.pleskautomation_list', 'icons/database_warning_48.png', 'Pleskautomation Licenses Breakdown');
+			$menu->add_link(self::$module.'api', 'choice=none.pleskautomation_licenses_list', 'whm/createacct.gif', 'List all Pleskautomation Licenses');
 		}
 	}
 
@@ -81,9 +80,9 @@ class Plugin {
 
 	public static function getSettings(GenericEvent $event) {
 		$settings = $event->getSubject();
-		$settings->add_text_setting('licenses', 'Pleskautomation', 'pleskautomation_username', 'Pleskautomation Username:', 'Pleskautomation Username', $settings->get_setting('FANTASTICO_USERNAME'));
-		$settings->add_text_setting('licenses', 'Pleskautomation', 'pleskautomation_password', 'Pleskautomation Password:', 'Pleskautomation Password', $settings->get_setting('FANTASTICO_PASSWORD'));
-		$settings->add_dropdown_setting('licenses', 'Pleskautomation', 'outofstock_licenses_pleskautomation', 'Out Of Stock Pleskautomation Licenses', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_LICENSES_FANTASTICO'), array('0', '1'), array('No', 'Yes',));
+		$settings->add_text_setting(self::$module, 'Pleskautomation', 'pleskautomation_username', 'Pleskautomation Username:', 'Pleskautomation Username', $settings->get_setting('FANTASTICO_USERNAME'));
+		$settings->add_text_setting(self::$module, 'Pleskautomation', 'pleskautomation_password', 'Pleskautomation Password:', 'Pleskautomation Password', $settings->get_setting('FANTASTICO_PASSWORD'));
+		$settings->add_dropdown_setting(self::$module, 'Pleskautomation', 'outofstock_licenses_pleskautomation', 'Out Of Stock Pleskautomation Licenses', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_LICENSES_FANTASTICO'), array('0', '1'), array('No', 'Yes',));
 	}
 
 }
