@@ -19,21 +19,21 @@ class Plugin {
 
 	public static function getHooks() {
 		return [
+			self::$module.'.settings' => [__CLASS__, 'getSettings'],
+			self::$module.'.activate' => [__CLASS__, 'getActivate'],
 		];
 	}
 
 	public static function getActivate(GenericEvent $event) {
 		$license = $event->getSubject();
-		if ($event['category'] == SERVICE_TYPES_FANTASTICO) {
+		if ($event['category'] == SERVICE_TYPES_WEB_PPA) {
 			myadmin_log(self::$module, 'info', 'Pleskautomation Activation', __LINE__, __FILE__);
-			function_requirements('activate_pleskautomation');
-			activate_pleskautomation($license->get_ip(), $event['field1']);
 			$event->stopPropagation();
 		}
 	}
 
 	public static function getChangeIp(GenericEvent $event) {
-		if ($event['category'] == SERVICE_TYPES_FANTASTICO) {
+		if ($event['category'] == SERVICE_TYPES_WEB_PPA) {
 			$license = $event->getSubject();
 			$settings = get_module_settings(self::$module);
 			$pleskautomation = new Pleskautomation(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
@@ -80,9 +80,8 @@ class Plugin {
 
 	public static function getSettings(GenericEvent $event) {
 		$settings = $event->getSubject();
-		$settings->add_text_setting(self::$module, 'Pleskautomation', 'pleskautomation_username', 'Pleskautomation Username:', 'Pleskautomation Username', $settings->get_setting('FANTASTICO_USERNAME'));
-		$settings->add_text_setting(self::$module, 'Pleskautomation', 'pleskautomation_password', 'Pleskautomation Password:', 'Pleskautomation Password', $settings->get_setting('FANTASTICO_PASSWORD'));
-		$settings->add_dropdown_setting(self::$module, 'Pleskautomation', 'outofstock_licenses_pleskautomation', 'Out Of Stock Pleskautomation Licenses', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_LICENSES_FANTASTICO'), array('0', '1'), array('No', 'Yes',));
+		$settings->add_select_master(self::$module, 'Default Servers', self::$module, 'new_website_ppa_server', 'Default Plesk Automation Setup Server', NEW_WEBSITE_PPA_SERVER, SERVICE_TYPES_WEB_PPA);
+		$settings->add_dropdown_setting(self::$module, 'Out of Stock', 'outofstock_webhosting_ppa', 'Out Of Stock Plesk Automation Webhosting', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_WEBHOSTING_PPA'), array('0', '1'), array('No', 'Yes', ));
 	}
 
 }
