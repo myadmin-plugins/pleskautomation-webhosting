@@ -115,14 +115,14 @@ class Plugin {
 				myadmin_log(self::$module, 'info', 'activatesubscription Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
 			request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'activateSubscription', $request, $result);
-			$subscription_id = $result['result']['subscription_id'];
-			$extra[2] = $subscription_id;
+			$subscriptoinId = $result['result']['subscription_id'];
+			$extra[2] = $subscriptoinId;
 			$ser_extra = $db->real_escape(myadmin_stringify($extra));
 			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$ser_extra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$id}'", __LINE__, __FILE__);
-			myadmin_log(self::$module, 'info', "activateSubscription Got Subscription ID: {$subscription_id}", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "activateSubscription Got Subscription ID: {$subscriptoinId}", __LINE__, __FILE__);
 			/*
 			  $request = array(
-			  'subscription_id' => $subscription_id,
+			  'subscription_id' => $subscriptoinId,
 			  'get_resources' => TRUE,
 			  );
 			  $result = $ppaConnector->getSubscription($request);
@@ -136,7 +136,7 @@ class Plugin {
 			 */
 			$request = array(
 				'new_webspace' => array(
-					'sub_id' => $subscription_id,
+					'sub_id' => $subscriptoinId,
 					'domain' => $hostname,
 					'resources' => array(
 						array('rt_id' => 1000084), // plesk_integration Subscription
@@ -172,7 +172,7 @@ class Plugin {
 			}
 			/*
 			  $request = array(
-			  'subscription_id' => $subscription_id,
+			  'subscription_id' => $subscriptoinId,
 			  );
 			  $result = $ppaConnector->removeSubscription($request);
 			  //echo "Result:";var_dump($result);echo "\n";
@@ -216,10 +216,10 @@ class Plugin {
 				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__);
 				$event['success'] = FALSE;
 			} else {
-				list($account_id, $user_id, $subscription_id, $webspace_id) = $extra;
+				list($account_id, $user_id, $subscriptoinId, $webspace_id) = $extra;
 				function_requirements('get_webhosting_ppa_instance');
 				$ppaConnector = get_webhosting_ppa_instance($serverdata);
-				$request = ['subscription_id' => $subscription_id];
+				$request = ['subscription_id' => $subscriptoinId];
 				$result = $ppaConnector->enableSubscription($request);
 				try {
 					PPAConnector::checkResponse($result);

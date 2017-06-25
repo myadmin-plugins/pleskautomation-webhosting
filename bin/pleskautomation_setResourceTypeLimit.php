@@ -6,7 +6,7 @@ $password = _randomstring(10);
 $data = $GLOBALS['tf']->accounts->read(2773);
 list($first, $last) = explode(' ', $data['name']);
 $request = array(
-	'subscription_id' => $subscription_id,
+	'subscription_id' => $subscriptoinId,
 	'resource_type_id' => $resource_type,
 );
 // Make the pem.addAccount call.

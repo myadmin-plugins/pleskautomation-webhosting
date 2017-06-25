@@ -2,9 +2,9 @@
 include_once(__DIR__.'/../../../include/functions.inc.php');
 $ppaConnector = get_webhosting_ppa_instance();
 // let us form an array with account data
-$subscription_id = 215;
+$subscriptoinId = 215;
 $request = array(
-	'subscription_id' => $subscription_id,
+	'subscription_id' => $subscriptoinId,
 );
 // Make the pem.addAccount call.
 // The PPAConnector instance will form a proper XML-RPC request by itself.
