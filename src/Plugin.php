@@ -2,6 +2,7 @@
 
 namespace Detain\MyAdminPleskAutomation;
 
+use Detain\MyAdminPleskAutomation\PPAConnector;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 class Plugin {
@@ -127,7 +128,7 @@ class Plugin {
 			  $result = $ppaConnector->getSubscription($request);
 			  echo "Result:";var_dump($result);echo "\n";
 			  try {
-			  PPAConnector::checkResponse($result);
+				PPAConnector::checkResponse($result);
 			  } catch (Exception $e) {
 			  echo 'Caught exception: '.$e->getMessage()."\n";
 			  }
@@ -176,7 +177,7 @@ class Plugin {
 			  $result = $ppaConnector->removeSubscription($request);
 			  //echo "Result:";var_dump($result);echo "\n";
 			  try {
-			  PPAConnector::checkResponse($result);
+				PPAConnector::checkResponse($result);
 			  } catch (Exception $e) {
 			  echo 'Caught exception: '.$e->getMessage()."\n";
 			  }
@@ -187,7 +188,7 @@ class Plugin {
 			  $result = $ppaConnector->removeAccount($request);
 			  //echo "Result:";var_dump($result);echo "\n";
 			  try {
-			  PPAConnector::checkResponse($result);
+				PPAConnector::checkResponse($result);
 			  } catch (Exception $e) {
 			  echo 'Caught exception: '.$e->getMessage()."\n";
 			  }
@@ -216,13 +217,12 @@ class Plugin {
 				$event['success'] = FALSE;
 			} else {
 				list($account_id, $user_id, $subscription_id, $webspace_id) = $extra;
-				require_once(INCLUDE_ROOT.'/webhosting/class.pleskautomation.php');
 				function_requirements('get_webhosting_ppa_instance');
 				$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				$request = ['subscription_id' => $subscription_id];
 				$result = $ppaConnector->enableSubscription($request);
 				try {
-					\PPAConnector::checkResponse($result);
+					PPAConnector::checkResponse($result);
 				} catch (\Exception $e) {
 					echo 'Caught exception: '.$e->getMessage()."\n";
 				}
