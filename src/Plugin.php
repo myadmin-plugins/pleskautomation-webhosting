@@ -206,7 +206,6 @@ class Plugin {
 			$serverdata = get_service_master($serviceInfo[$settings['PREFIX'].'_server'], self::$module);
 			$hash = $serverdata[$settings['PREFIX'].'_key'];
 			$ip = $serverdata[$settings['PREFIX'].'_ip'];
-			$success = TRUE;
 			$extra = run_event('parse_service_extra', $serviceInfo[$settings['PREFIX'].'_extra'], self::$module);
 			if (sizeof($extra) == 0)
 				function_requirements('get_plesk_info_from_domain');
@@ -215,7 +214,7 @@ class Plugin {
 				$msg = 'Blank/Empty Plesk Subscription Info, Email support@interserver.net about this';
 				dialog('Error', $msg);
 				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__);
-				$success = FALSE;
+				$event['success'] = FALSE;
 			} else {
 				list($account_id, $user_id, $subscription_id, $webspace_id) = $extra;
 				require_once(INCLUDE_ROOT.'/webhosting/class.pleskautomation.php');
