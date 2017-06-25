@@ -64,8 +64,8 @@ class Plugin {
 				//echo "Result:";var_dump($result);echo "\n";
 				PPAConnector::checkResponse($result);
 			} catch (Exception $e) {
-				echo 'Caught exception: ' . $e->getMessage() . "\n";
-				myadmin_log(self::$module, 'info', 'addAccount Caught exception: ' . $e->getMessage(), __LINE__, __FILE__);
+				echo 'Caught exception: '.$e->getMessage() . "\n";
+				myadmin_log(self::$module, 'info', 'addAccount Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
 			request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'addAccount', $request, $result);
 			$account_id = $result['result']['account_id'];
@@ -91,8 +91,8 @@ class Plugin {
 				//echo "Result:";var_dump($result);echo "\n";
 				PPAConnector::checkResponse($result);
 			} catch (Exception $e) {
-				echo 'Caught exception: ' . $e->getMessage() . "\n";
-				myadmin_log(self::$module, 'info', 'addAccountMember Caught exception: ' . $e->getMessage(), __LINE__, __FILE__);
+				echo 'Caught exception: '.$e->getMessage() . "\n";
+				myadmin_log(self::$module, 'info', 'addAccountMember Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
 			request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'addAccountMember', $request, $result);
 			$user_id = $result['result']['user_id'];
@@ -110,8 +110,8 @@ class Plugin {
 				//echo "Result:";var_dump($result);echo "\n";
 				PPAConnector::checkResponse($result);
 			} catch (Exception $e) {
-				echo 'Caught exception: ' . $e->getMessage() . "\n";
-				myadmin_log(self::$module, 'info', 'activatesubscription Caught exception: ' . $e->getMessage(), __LINE__, __FILE__);
+				echo 'Caught exception: '.$e->getMessage() . "\n";
+				myadmin_log(self::$module, 'info', 'activatesubscription Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
 			request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'activateSubscription', $request, $result);
 			$subscription_id = $result['result']['subscription_id'];
@@ -152,8 +152,8 @@ class Plugin {
 				//echo "Result:";var_dump($result);echo "\n";
 				PPAConnector::checkResponse($result);
 			} catch (Exception $e) {
-				echo 'Caught exception: ' . $e->getMessage() . "\n";
-				myadmin_log(self::$module, 'info', 'createWebspace Caught exception: ' . $e->getMessage(), __LINE__, __FILE__);
+				echo 'Caught exception: '.$e->getMessage() . "\n";
+				myadmin_log(self::$module, 'info', 'createWebspace Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
 			request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'createWebspace', $request, $result);
 			$webspace_id = $result['result']['webspace_id'];
@@ -166,7 +166,7 @@ class Plugin {
 				website_welcome_email($id);
 			} else {
 				add_output('Error Creating Website');
-				myadmin_log(self::$module, 'info', 'Failure, Response: ' . var_export($result, true), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($result, true), __LINE__, __FILE__);
 				return false;
 			}
 			/*
