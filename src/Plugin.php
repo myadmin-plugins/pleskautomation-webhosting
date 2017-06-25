@@ -41,8 +41,8 @@ class Plugin {
 			$serverdata = get_service_master($serviceInfo[$settings['PREFIX'].'_server'], self::$module);
 			$hash = $serverdata[$settings['PREFIX'].'_key'];
 			$ip = $serverdata[$settings['PREFIX'].'_ip'];
-			$success = true;
-			$extra = run_event('parse_service_extra', $serviceInfo[$settings['PREFIX'] . '_extra'], self::$module);
+			$success = TRUE;
+			$extra = run_event('parse_service_extra', $serviceInfo[$settings['PREFIX'].'_extra'], self::$module);
 			if (sizeof($extra) == 0)
 				function_requirements('get_plesk_info_from_domain');
 				$extra = get_plesk_info_from_domain($serviceInfo[$settings['PREFIX'].'_hostname']);
@@ -53,17 +53,17 @@ class Plugin {
 				$success = FALSE;
 			} else {
 				list($account_id, $user_id, $subscription_id, $webspace_id) = $extra;
-				require_once(INCLUDE_ROOT . '/webhosting/class.pleskautomation.php');
+				require_once(INCLUDE_ROOT.'/webhosting/class.pleskautomation.php');
 				function_requirements('get_webhosting_ppa_instance');
 				$ppaConnector = get_webhosting_ppa_instance($serverdata);
-				$request = ['subscription_id' => $subscription_id ];
+				$request = ['subscription_id' => $subscription_id];
 				$result = $ppaConnector->enableSubscription($request);
 				try {
 					\PPAConnector::checkResponse($result);
 				} catch (\Exception $e) {
-					echo 'Caught exception: ' . $e->getMessage() . "\n";
+					echo 'Caught exception: '.$e->getMessage()."\n";
 				}
-				myadmin_log(self::$module, 'info', 'enableSubscription Called got ' . json_encode($result), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'enableSubscription Called got '.json_encode($result), __LINE__, __FILE__);
 			}
 			$event->stopPropagation();
 		}
