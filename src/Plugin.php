@@ -21,6 +21,7 @@ class Plugin {
 		return [
 			self::$module.'.settings' => [__CLASS__, 'getSettings'],
 			self::$module.'.activate' => [__CLASS__, 'getActivate'],
+			self::$module.'.reactivate' => [__CLASS__, 'getReactivate'],
 		];
 	}
 
@@ -28,6 +29,42 @@ class Plugin {
 		$license = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_WEB_PPA) {
 			myadmin_log(self::$module, 'info', 'Pleskautomation Activation', __LINE__, __FILE__);
+			$event->stopPropagation();
+		}
+	}
+
+	public static function getReactivate(GenericEvent $event) {
+		$service = $event->getSubject();
+		if ($event['category'] == SERVICE_TYPES_WEB_PPA) {
+			$serviceInfo = $service->getServiceInfo();
+			$settings = get_module_settings(self::$module);
+			$serverdata = get_service_master($serviceInfo[$settings['PREFIX'].'_server'], self::$module);
+			$hash = $serverdata[$settings['PREFIX'].'_key'];
+			$ip = $serverdata[$settings['PREFIX'].'_ip'];
+			$success = true;
+			$extra = run_event('parse_service_extra', $serviceInfo[$settings['PREFIX'] . '_extra'], self::$module);
+			if (sizeof($extra) == 0)
+				function_requirements('get_plesk_info_from_domain');
+				$extra = get_plesk_info_from_domain($serviceInfo[$settings['PREFIX'].'_hostname']);
+			if (sizeof($extra) == 0) {
+				$msg = 'Blank/Empty Plesk Subscription Info, Email support@interserver.net about this';
+				dialog('Error', $msg);
+				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__);
+				$success = FALSE;
+			} else {
+				list($account_id, $user_id, $subscription_id, $webspace_id) = $extra;
+				require_once(INCLUDE_ROOT . '/webhosting/class.pleskautomation.php');
+				function_requirements('get_webhosting_ppa_instance');
+				$ppaConnector = get_webhosting_ppa_instance($serverdata);
+				$request = ['subscription_id' => $subscription_id ];
+				$result = $ppaConnector->enableSubscription($request);
+				try {
+					\PPAConnector::checkResponse($result);
+				} catch (\Exception $e) {
+					echo 'Caught exception: ' . $e->getMessage() . "\n";
+				}
+				myadmin_log(self::$module, 'info', 'enableSubscription Called got ' . json_encode($result), __LINE__, __FILE__);
+			}
 			$event->stopPropagation();
 		}
 	}
