@@ -29,6 +29,171 @@ class Plugin {
 		$license = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_WEB_PPA) {
 			myadmin_log(self::$module, 'info', 'Pleskautomation Activation', __LINE__, __FILE__);
+			$ppaConnector = get_webhosting_ppa_instance($serverdata);
+			$service_template_id = 46;
+			if (!isset($data['name']) || trim($data['name']) == '') {
+				$data['name'] = str_replace('@', ' ', $data['account_lid']);
+			}
+			list($first, $last) = explode(' ', $data['name']);
+			$request_person = array(
+				'first_name' => $first,
+				'last_name' => $last,
+				'company_name' => (isset($data['company']) ? $data['company'] : ''),
+			);
+			$request_address = array(
+				'street_name' => (isset($data['address']) ? $data['address'] : ''),
+				'address2' => (isset($data['address2']) ? $data['address2'] : ''),
+				'zipcode' => (isset($data['zip']) ? $data['zip'] : ''),
+				'city' => (isset($data['city']) ? $data['city'] : ''),
+				'country' => convert_country_iso2($data['country']),
+				'state' => (isset($data['state']) ? $data['state'] : ''),
+			);
+			$request_phone = array(
+				'country_code' => '1',
+				'area_code' => '',
+				'phone_num' => (isset($data['phone']) ? $data['phone'] : ''),
+				'ext_num' => '',
+			);
+			$request = array(
+				'person' => $request_person,
+				'address' => $request_address,
+				'phone' => $request_phone,
+				'email' => $data['account_lid'],
+			);
+			try {
+				$result = $ppaConnector->addAccount($request);
+				//echo "Result:";var_dump($result);echo "\n";
+				PPAConnector::checkResponse($result);
+			} catch (Exception $e) {
+				echo 'Caught exception: ' . $e->getMessage() . "\n";
+				myadmin_log(self::$module, 'info', 'addAccount Caught exception: ' . $e->getMessage(), __LINE__, __FILE__);
+			}
+			request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'addAccount', $request, $result);
+			$account_id = $result['result']['account_id'];
+			if (!is_array($extra))
+				$extra = [];
+			$extra[0] = $account_id;
+			$ser_extra = $db->real_escape(myadmin_stringify($extra));
+			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$ser_extra}' where {$settings['PREFIX']}_id='{$id}'", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "addAccount Got Account ID: {$account_id}", __LINE__, __FILE__);
+			$request = array(
+				'account_id' => $account_id,
+				'auth' => array(
+					'login' => $username,
+					'password' => $password
+				),
+				'person' => $request_person,
+				'address' => $request_address,
+				'phone' => $request_phone,
+				'email' => $data['account_lid'],
+			);
+			try {
+				$result = $ppaConnector->addAccountMember($request);
+				//echo "Result:";var_dump($result);echo "\n";
+				PPAConnector::checkResponse($result);
+			} catch (Exception $e) {
+				echo 'Caught exception: ' . $e->getMessage() . "\n";
+				myadmin_log(self::$module, 'info', 'addAccountMember Caught exception: ' . $e->getMessage(), __LINE__, __FILE__);
+			}
+			request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'addAccountMember', $request, $result);
+			$user_id = $result['result']['user_id'];
+			$username = $db->real_escape($username);
+			$extra[1] = $user_id;
+			$ser_extra = $db->real_escape(myadmin_stringify($extra));
+			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$ser_extra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$id}'", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "addAccountMember Got Account ID: {$user_id}  Username: {$username}  Password: {$password}", __LINE__, __FILE__);
+			$request = array(
+				'account_id' => $account_id,
+				'service_template_id' => $service_template_id,
+			);
+			try {
+				$result = $ppaConnector->activateSubscription($request);
+				//echo "Result:";var_dump($result);echo "\n";
+				PPAConnector::checkResponse($result);
+			} catch (Exception $e) {
+				echo 'Caught exception: ' . $e->getMessage() . "\n";
+				myadmin_log(self::$module, 'info', 'activatesubscription Caught exception: ' . $e->getMessage(), __LINE__, __FILE__);
+			}
+			request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'activateSubscription', $request, $result);
+			$subscription_id = $result['result']['subscription_id'];
+			$extra[2] = $subscription_id;
+			$ser_extra = $db->real_escape(myadmin_stringify($extra));
+			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$ser_extra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$id}'", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "activateSubscription Got Subscription ID: {$subscription_id}", __LINE__, __FILE__);
+			/*
+			  $request = array(
+			  'subscription_id' => $subscription_id,
+			  'get_resources' => true,
+			  );
+			  $result = $ppaConnector->getSubscription($request);
+			  echo "Result:";var_dump($result);echo "\n";
+			  try {
+			  PPAConnector::checkResponse($result);
+			  } catch (Exception $e) {
+			  echo 'Caught exception: '.$e->getMessage()."\n";
+			  }
+			  print_r($result);
+			 */
+			$request = array(
+				'new_webspace' => array(
+					'sub_id' => $subscription_id,
+					'domain' => $hostname,
+					'resources' => array(
+						array('rt_id' => 1000084), // plesk_integration Subscription
+						array('rt_id' => 1000115), // pleskwebiis_hosting IIS Webspace
+						array('rt_id' => 1000087), // plesk_db_hosting MySQL database
+						//array('rt_id' => 1000091), // plesk_db_hosting Microsoft SQL database
+						array('rt_id' => 1000152), // plesk_db_hosting Microsoft SQL database
+						array('rt_id' => 1000132), // plesk__mail PostFix Mail
+					),
+				),
+			);
+			try {
+				$result = $ppaConnector->{'pleskintegration.createWebspace'}($request);
+				//echo "Result:";var_dump($result);echo "\n";
+				PPAConnector::checkResponse($result);
+			} catch (Exception $e) {
+				echo 'Caught exception: ' . $e->getMessage() . "\n";
+				myadmin_log(self::$module, 'info', 'createWebspace Caught exception: ' . $e->getMessage(), __LINE__, __FILE__);
+			}
+			request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'createWebspace', $request, $result);
+			$webspace_id = $result['result']['webspace_id'];
+			$extra[3] = $webspace_id;
+			$ser_extra = $db->real_escape(myadmin_stringify($extra));
+			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$ser_extra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$id}'", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "Got Website ID: {$webspace_id}", __LINE__, __FILE__);
+			if (is_numeric($webspace_id)) {
+				//myadmin_log(self::$module, 'info', "Success, Response: " . var_export($vesta->response, true), __LINE__, __FILE__);;
+				website_welcome_email($id);
+			} else {
+				add_output('Error Creating Website');
+				myadmin_log(self::$module, 'info', 'Failure, Response: ' . var_export($result, true), __LINE__, __FILE__);
+				return false;
+			}
+			/*
+			  $request = array(
+			  'subscription_id' => $subscription_id,
+			  );
+			  $result = $ppaConnector->removeSubscription($request);
+			  //echo "Result:";var_dump($result);echo "\n";
+			  try {
+			  PPAConnector::checkResponse($result);
+			  } catch (Exception $e) {
+			  echo 'Caught exception: '.$e->getMessage()."\n";
+			  }
+			  echo "Success Removing Subscription\n";
+			  $request = array(
+			  'account_id' => $account_id,
+			  );
+			  $result = $ppaConnector->removeAccount($request);
+			  //echo "Result:";var_dump($result);echo "\n";
+			  try {
+			  PPAConnector::checkResponse($result);
+			  } catch (Exception $e) {
+			  echo 'Caught exception: '.$e->getMessage()."\n";
+			  }
+			  echo "Success Removing Account.\n";
+			 */
 			$event->stopPropagation();
 		}
 	}
