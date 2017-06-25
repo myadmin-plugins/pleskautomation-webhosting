@@ -7,4 +7,4 @@ use Detain\MyAdminPleskAutomation\POA_FailedRequest_Exception;
 /**
  * {@inheritDoc}
  */
-class POA_DomainDoesNotExist_Exception extends POA_FailedRequest_Exception{}
+class POA_DomainDoesNotExist_Exception extends POA_FailedRequest_Exception {}
