@@ -1,14 +1,13 @@
 <?php
 
-namespace Detain\MyAdminPleskautomation;
+namespace Detain\MyAdminPleskAutomation;
 
-use Detain\Pleskautomation\Pleskautomation;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
 class Plugin {
 
-	public static $name = 'Pleskautomation Webhosting';
-	public static $description = 'Allows selling of Pleskautomation Server and VPS License Types.  More info at https://www.netenberg.com/pleskautomation.php';
+	public static $name = 'PleskAutomation Webhosting';
+	public static $description = 'Allows selling of PleskAutomation Server and VPS License Types.  More info at https://www.netenberg.com/pleskautomation.php';
 	public static $help = 'It provides more than one million end users the ability to quickly install dozens of the leading open source content management systems into their web space.  	Must have a pre-existing cPanel license with cPanelDirect to purchase a pleskautomation license. Allow 10 minutes for activation.';
 	public static $module = 'webhosting';
 	public static $type = 'service';
@@ -28,7 +27,7 @@ class Plugin {
 	public static function getActivate(GenericEvent $event) {
 		$license = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_WEB_PPA) {
-			myadmin_log(self::$module, 'info', 'Pleskautomation Activation', __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', 'PleskAutomation Activation', __LINE__, __FILE__);
 			$ppaConnector = get_webhosting_ppa_instance($serverdata);
 			$service_template_id = 46;
 			if (!isset($data['name']) || trim($data['name']) == '') {
@@ -237,11 +236,11 @@ class Plugin {
 		if ($event['category'] == SERVICE_TYPES_WEB_PPA) {
 			$license = $event->getSubject();
 			$settings = get_module_settings(self::$module);
-			$pleskautomation = new Pleskautomation(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
+			$pleskautomation = new PleskAutomation(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
 			myadmin_log(self::$module, 'info', "IP Change - (OLD:".$license->get_ip().") (NEW:{$event['newip']})", __LINE__, __FILE__);
 			$result = $pleskautomation->editIp($license->get_ip(), $event['newip']);
 			if (isset($result['faultcode'])) {
-				myadmin_log(self::$module, 'error', 'Pleskautomation editIp('.$license->get_ip().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
+				myadmin_log(self::$module, 'error', 'PleskAutomation editIp('.$license->get_ip().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__);
 				$event['status'] = 'error';
 				$event['status_text'] = 'Error Code '.$result['faultcode'].': '.$result['fault'];
 			} else {
@@ -257,9 +256,9 @@ class Plugin {
 	public static function getMenu(GenericEvent $event) {
 		$menu = $event->getSubject();
 		if ($GLOBALS['tf']->ima == 'admin') {
-			$menu->add_link(self::$module, 'choice=none.reusable_pleskautomation', 'icons/database_warning_48.png', 'ReUsable Pleskautomation Licenses');
-			$menu->add_link(self::$module, 'choice=none.pleskautomation_list', 'icons/database_warning_48.png', 'Pleskautomation Licenses Breakdown');
-			$menu->add_link(self::$module.'api', 'choice=none.pleskautomation_licenses_list', 'whm/createacct.gif', 'List all Pleskautomation Licenses');
+			$menu->add_link(self::$module, 'choice=none.reusable_pleskautomation', 'icons/database_warning_48.png', 'ReUsable PleskAutomation Licenses');
+			$menu->add_link(self::$module, 'choice=none.pleskautomation_list', 'icons/database_warning_48.png', 'PleskAutomation Licenses Breakdown');
+			$menu->add_link(self::$module.'api', 'choice=none.pleskautomation_licenses_list', 'whm/createacct.gif', 'List all PleskAutomation Licenses');
 		}
 	}
 
@@ -275,7 +274,7 @@ class Plugin {
 		$loader->add_requirement('activate_pleskautomation', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/pleskautomation.inc.php');
 		$loader->add_requirement('get_reusable_pleskautomation', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/pleskautomation.inc.php');
 		$loader->add_requirement('reusable_pleskautomation', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/reusable_pleskautomation.php');
-		$loader->add_requirement('class.Pleskautomation', '/../vendor/detain/pleskautomation-webhosting/src/Pleskautomation.php');
+		$loader->add_requirement('class.PleskAutomation', '/../vendor/detain/pleskautomation-webhosting/src/PleskAutomation.php');
 		$loader->add_requirement('vps_add_pleskautomation', '/vps/addons/vps_add_pleskautomation.php');
 	}
 
