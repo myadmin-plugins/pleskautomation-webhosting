@@ -122,7 +122,7 @@ class Plugin {
 			/*
 			  $request = array(
 			  'subscription_id' => $subscription_id,
-			  'get_resources' => true,
+			  'get_resources' => TRUE,
 			  );
 			  $result = $ppaConnector->getSubscription($request);
 			  echo "Result:";var_dump($result);echo "\n";
@@ -162,12 +162,12 @@ class Plugin {
 			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$ser_extra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$id}'", __LINE__, __FILE__);
 			myadmin_log(self::$module, 'info', "Got Website ID: {$webspace_id}", __LINE__, __FILE__);
 			if (is_numeric($webspace_id)) {
-				//myadmin_log(self::$module, 'info', "Success, Response: " . var_export($vesta->response, true), __LINE__, __FILE__);;
+				//myadmin_log(self::$module, 'info', "Success, Response: " . var_export($vesta->response, TRUE), __LINE__, __FILE__);;
 				website_welcome_email($id);
 			} else {
 				add_output('Error Creating Website');
-				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($result, true), __LINE__, __FILE__);
-				return false;
+				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($result, TRUE), __LINE__, __FILE__);
+				return FALSE;
 			}
 			/*
 			  $request = array(

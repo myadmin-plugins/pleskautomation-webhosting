@@ -46,8 +46,8 @@ class PPAConnector
 			$url = "https://{$login}:{$password}@{$IP}:8440/RPC2";
 			$options = array(
 				'prefix' => 'pem.',
-				'debug' => false,
-				'sslverify' => false,
+				'debug' => FALSE,
+				'sslverify' => FALSE,
 			);
 			$xmlrpcClient = new xmlrpc_client($url, $options);
 */
@@ -58,8 +58,8 @@ class PPAConnector
 			//echo "$url\n";exit;
 			$options = array(
 				'prefix' => 'pem.',
-				'debug' => false,
-				'sslverify' => false,
+				'debug' => FALSE,
+				'sslverify' => FALSE,
 			);
 			$xmlrpcClient = XML_RPC2_Client::create($url, $options);
 			self::$_xmlrpcProxy = $xmlrpcClient;
@@ -81,7 +81,7 @@ class PPAConnector
 				// Here should go some error handling
 				throw new POA_FailedRequest_Exception($response['error_message']);
 			} else {
-				return true;
+				return TRUE;
 			}
 		} else {
 			throw new POA_MalformedRequest_Exception('Malformed answer from POA');
