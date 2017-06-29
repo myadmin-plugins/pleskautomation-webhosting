@@ -26,9 +26,20 @@ class Plugin {
 	}
 
 	public static function getActivate(GenericEvent $event) {
-		$license = $event->getSubject();
+		$service = $event->getSubject();
 		if ($event['category'] == SERVICE_TYPES_WEB_PPA) {
 			myadmin_log(self::$module, 'info', 'PleskAutomation Activation', __LINE__, __FILE__);
+			$serviceInfo = $service->getServiceInfo();
+			$settings = get_module_settings(self::$module);
+			$serverdata = get_service_master($serviceInfo[$settings['PREFIX'].'_server'], self::$module);
+			$hash = $serverdata[$settings['PREFIX'].'_key'];
+			$ip = $serverdata[$settings['PREFIX'].'_ip'];
+			$extra = run_event('parse_service_extra', $serviceInfo[$settings['PREFIX'].'_extra'], self::$module);
+			$hostname = $serviceInfo[$settings['PREFIX'].'_hostname'];
+			if (trim($hostname) == '')
+				$hostname = $serviceInfo[$settings['PREFIX'].'_id'].'.server.com';
+			$password = website_get_password($serviceInfo[$settings['PREFIX'].'_id']);
+			$username = get_new_webhosting_username($serviceInfo[$settings['PREFIX'].'_id'], $hostname, $serviceInfo[$settings['PREFIX'].'_server']);
 			$ppaConnector = get_webhosting_ppa_instance($serverdata);
 			$service_template_id = 46;
 			if (!isset($data['name']) || trim($data['name']) == '') {
@@ -68,13 +79,13 @@ class Plugin {
 				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				myadmin_log(self::$module, 'info', 'addAccount Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
-			request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'addAccount', $request, $result);
+			request_log(self::$module, $serviceInfo[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'addAccount', $request, $result);
 			$account_id = $result['result']['account_id'];
 			if (!is_array($extra))
 				$extra = [];
 			$extra[0] = $account_id;
 			$ser_extra = $db->real_escape(myadmin_stringify($extra));
-			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$ser_extra}' where {$settings['PREFIX']}_id='{$id}'", __LINE__, __FILE__);
+			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$ser_extra}' where {$settings['PREFIX']}_id='{$serviceInfo[$settings['PREFIX'].'_id']}'", __LINE__, __FILE__);
 			myadmin_log(self::$module, 'info', "addAccount Got Account ID: {$account_id}", __LINE__, __FILE__);
 			$request = array(
 				'account_id' => $account_id,
@@ -95,12 +106,12 @@ class Plugin {
 				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				myadmin_log(self::$module, 'info', 'addAccountMember Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
-			request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'addAccountMember', $request, $result);
+			request_log(self::$module, $serviceInfo[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'addAccountMember', $request, $result);
 			$user_id = $result['result']['user_id'];
 			$username = $db->real_escape($username);
 			$extra[1] = $user_id;
 			$ser_extra = $db->real_escape(myadmin_stringify($extra));
-			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$ser_extra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$id}'", __LINE__, __FILE__);
+			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$ser_extra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceInfo[$settings['PREFIX'].'_id']}'", __LINE__, __FILE__);
 			myadmin_log(self::$module, 'info', "addAccountMember Got Account ID: {$user_id}  Username: {$username}  Password: {$password}", __LINE__, __FILE__);
 			$request = array(
 				'account_id' => $account_id,
@@ -114,11 +125,11 @@ class Plugin {
 				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				myadmin_log(self::$module, 'info', 'activatesubscription Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
-			request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'activateSubscription', $request, $result);
+			request_log(self::$module, $serviceInfo[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'activateSubscription', $request, $result);
 			$subscriptoinId = $result['result']['subscription_id'];
 			$extra[2] = $subscriptoinId;
 			$ser_extra = $db->real_escape(myadmin_stringify($extra));
-			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$ser_extra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$id}'", __LINE__, __FILE__);
+			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$ser_extra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceInfo[$settings['PREFIX'].'_id']}'", __LINE__, __FILE__);
 			myadmin_log(self::$module, 'info', "activateSubscription Got Subscription ID: {$subscriptoinId}", __LINE__, __FILE__);
 			/*
 			  $request = array(
@@ -156,15 +167,15 @@ class Plugin {
 				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				myadmin_log(self::$module, 'info', 'createWebspace Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
-			request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'createWebspace', $request, $result);
+			request_log(self::$module, $serviceInfo[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'createWebspace', $request, $result);
 			$webspace_id = $result['result']['webspace_id'];
 			$extra[3] = $webspace_id;
 			$ser_extra = $db->real_escape(myadmin_stringify($extra));
-			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$ser_extra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$id}'", __LINE__, __FILE__);
+			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$ser_extra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceInfo[$settings['PREFIX'].'_id']}'", __LINE__, __FILE__);
 			myadmin_log(self::$module, 'info', "Got Website ID: {$webspace_id}", __LINE__, __FILE__);
 			if (is_numeric($webspace_id)) {
 				//myadmin_log(self::$module, 'info', "Success, Response: " . var_export($vesta->response, TRUE), __LINE__, __FILE__);;
-				website_welcome_email($id);
+				website_welcome_email($serviceInfo[$settings['PREFIX'].'_id']);
 			} else {
 				add_output('Error Creating Website');
 				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($result, TRUE), __LINE__, __FILE__);
