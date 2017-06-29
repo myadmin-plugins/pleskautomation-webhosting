@@ -65,7 +65,7 @@ class Plugin {
 				//echo "Result:";var_dump($result);echo "\n";
 				PPAConnector::checkResponse($result);
 			} catch (Exception $e) {
-				echo 'Caught exception: '.$e->getMessage()."\n";
+				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				myadmin_log(self::$module, 'info', 'addAccount Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
 			request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'addAccount', $request, $result);
@@ -92,7 +92,7 @@ class Plugin {
 				//echo "Result:";var_dump($result);echo "\n";
 				PPAConnector::checkResponse($result);
 			} catch (Exception $e) {
-				echo 'Caught exception: '.$e->getMessage()."\n";
+				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				myadmin_log(self::$module, 'info', 'addAccountMember Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
 			request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'addAccountMember', $request, $result);
@@ -111,7 +111,7 @@ class Plugin {
 				//echo "Result:";var_dump($result);echo "\n";
 				PPAConnector::checkResponse($result);
 			} catch (Exception $e) {
-				echo 'Caught exception: '.$e->getMessage()."\n";
+				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				myadmin_log(self::$module, 'info', 'activatesubscription Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
 			request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'activateSubscription', $request, $result);
@@ -130,7 +130,7 @@ class Plugin {
 			  try {
 				PPAConnector::checkResponse($result);
 			  } catch (Exception $e) {
-			  echo 'Caught exception: '.$e->getMessage()."\n";
+			  echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 			  }
 			  print_r($result);
 			 */
@@ -153,7 +153,7 @@ class Plugin {
 				//echo "Result:";var_dump($result);echo "\n";
 				PPAConnector::checkResponse($result);
 			} catch (Exception $e) {
-				echo 'Caught exception: '.$e->getMessage()."\n";
+				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				myadmin_log(self::$module, 'info', 'createWebspace Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
 			request_log(self::$module, $service[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'createWebspace', $request, $result);
@@ -179,7 +179,7 @@ class Plugin {
 			  try {
 				PPAConnector::checkResponse($result);
 			  } catch (Exception $e) {
-			  echo 'Caught exception: '.$e->getMessage()."\n";
+			  echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 			  }
 			  echo "Success Removing Subscription\n";
 			  $request = array(
@@ -190,7 +190,7 @@ class Plugin {
 			  try {
 				PPAConnector::checkResponse($result);
 			  } catch (Exception $e) {
-			  echo 'Caught exception: '.$e->getMessage()."\n";
+			  echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 			  }
 			  echo "Success Removing Account.\n";
 			 */
@@ -224,7 +224,7 @@ class Plugin {
 				try {
 					PPAConnector::checkResponse($result);
 				} catch (\Exception $e) {
-					echo 'Caught exception: '.$e->getMessage()."\n";
+					echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				}
 				myadmin_log(self::$module, 'info', 'enableSubscription Called got '.json_encode($result), __LINE__, __FILE__);
 			}
