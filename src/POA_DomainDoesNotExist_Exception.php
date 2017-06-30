@@ -2,7 +2,7 @@
 
 namespace Detain\MyAdminPleskAutomation;
 
-use Detain\MyAdminPleskAutomation\POA_FailedRequest_Exception;
+use Detain\MyAdminPleskAutomation\POA_FailedRequest_Exception as POA_FailedRequest_Exception;
 
 /**
  * {@inheritDoc}
