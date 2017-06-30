@@ -2,9 +2,9 @@
 
 namespace Detain\MyAdminPleskAutomation;
 
-use Detain\MyAdminPleskAutomation\POA_FailedRequest_Exception;
-use Detain\MyAdminPleskAutomation\POA_MalformedRequest_Exception;
-use Detain\MyAdminPleskAutomation\POA_DomainDoesNotExist_Exception;
+use Detain\MyAdminPleskAutomation\PPAFailedRequestException;
+use Detain\MyAdminPleskAutomation\PPAMalformedRequestException;
+use Detain\MyAdminPleskAutomation\PPADomainDoesNotExistException;
 
 require_once('XML/RPC2/Client.php');
 
@@ -71,19 +71,19 @@ class PPAConnector {
 	 *
 	 * @param $response
 	 * @return bool
-	 * @throws Detain\MyAdminPleskAutomation\POA_FailedRequest_Exception
-	 * @throws Detain\MyAdminPleskAutomation\POA_MalformedRequest_Exception
+	 * @throws Detain\MyAdminPleskAutomation\PPAFailedRequestException
+	 * @throws Detain\MyAdminPleskAutomation\PPAMalformedRequestException
 	 */
 	public static function checkResponse($response) {
 		if (isset($response['status'])) {
 			if ($response['status'] != 0) {
 				// Here should go some error handling
-				throw new POA_FailedRequest_Exception($response['error_message']);
+				throw new PPAFailedRequestException($response['error_message']);
 			} else {
 				return TRUE;
 			}
 		} else {
-			throw new POA_MalformedRequest_Exception('Malformed answer from POA');
+			throw new PPAMalformedRequestException('Malformed answer from POA');
 		}
 	}
 

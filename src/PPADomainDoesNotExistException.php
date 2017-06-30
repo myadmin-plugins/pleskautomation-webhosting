@@ -2,9 +2,9 @@
 
 namespace Detain\MyAdminPleskAutomation;
 
-use Detain\MyAdminPleskAutomation\POA_FailedRequest_Exception as POA_FailedRequest_Exception;
+use Detain\MyAdminPleskAutomation\PPAFailedRequestException as PPAFailedRequestException;
 
 /**
  * {@inheritDoc}
  */
-class POA_DomainDoesNotExist_Exception extends POA_FailedRequest_Exception {}
+class PPADomainDoesNotExistException extends PPAFailedRequestException {}
