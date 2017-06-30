@@ -12,7 +12,7 @@ require_once('XML/RPC2/Client.php');
  * Parallels Plesk Automation connector class provicding xml/rpc2 access to the service
  */
 class PPAConnector {
-	static protected $_xmlrpcProxy;
+	static protected $xmlrpcProxy;
 
 	protected function __construct() {
 		/* this stuff was up top */
@@ -30,7 +30,7 @@ class PPAConnector {
 	 */
 	static public function getInstance($IP, $login, $password) {
 		$password = str_replace('?', '%3F', $password);
-		if (!self::$_xmlrpcProxy) {
+		if (!self::$xmlrpcProxy) {
 			// Here go communication parameters for our management node
 /*
 			// Zend/XmlRpc
@@ -38,7 +38,7 @@ class PPAConnector {
 			$httpClient = $xmlrpcClient->getHttpClient();
 			$httpClient->setAuth($login, $password, Zend_Http_Client::AUTH_BASIC);
 			$httpClient->setConfig(array('timeout' => 45));
-			self::$_xmlrpcProxy = $xmlrpcClient->getProxy('pem'); //The pem prefix for API method names
+			self::$xmlrpcProxy = $xmlrpcClient->getProxy('pem'); //The pem prefix for API method names
 */
 /*
 			// XML_RPC
@@ -61,9 +61,9 @@ class PPAConnector {
 				'sslverify' => FALSE,
 			);
 			$xmlrpcClient = \XML_RPC2_Client::create($url, $options);
-			self::$_xmlrpcProxy = $xmlrpcClient;
+			self::$xmlrpcProxy = $xmlrpcClient;
 		}
-		return self::$_xmlrpcProxy;
+		return self::$xmlrpcProxy;
 	}
 
 	/**
