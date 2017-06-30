@@ -84,8 +84,8 @@ class Plugin {
 			if (!is_array($extra))
 				$extra = [];
 			$extra[0] = $account_id;
-			$ser_extra = $db->real_escape(myadmin_stringify($extra));
-			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$ser_extra}' where {$settings['PREFIX']}_id='{$serviceInfo[$settings['PREFIX'].'_id']}'", __LINE__, __FILE__);
+			$serExtra = $db->real_escape(myadmin_stringify($extra));
+			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$serExtra}' where {$settings['PREFIX']}_id='{$serviceInfo[$settings['PREFIX'].'_id']}'", __LINE__, __FILE__);
 			myadmin_log(self::$module, 'info', "addAccount Got Account ID: {$account_id}", __LINE__, __FILE__);
 			$request = array(
 				'account_id' => $account_id,
@@ -110,8 +110,8 @@ class Plugin {
 			$user_id = $result['result']['user_id'];
 			$username = $db->real_escape($username);
 			$extra[1] = $user_id;
-			$ser_extra = $db->real_escape(myadmin_stringify($extra));
-			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$ser_extra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceInfo[$settings['PREFIX'].'_id']}'", __LINE__, __FILE__);
+			$serExtra = $db->real_escape(myadmin_stringify($extra));
+			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$serExtra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceInfo[$settings['PREFIX'].'_id']}'", __LINE__, __FILE__);
 			myadmin_log(self::$module, 'info', "addAccountMember Got Account ID: {$user_id}  Username: {$username}  Password: {$password}", __LINE__, __FILE__);
 			$request = array(
 				'account_id' => $account_id,
@@ -128,8 +128,8 @@ class Plugin {
 			request_log(self::$module, $serviceInfo[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'activateSubscription', $request, $result);
 			$subscriptoinId = $result['result']['subscription_id'];
 			$extra[2] = $subscriptoinId;
-			$ser_extra = $db->real_escape(myadmin_stringify($extra));
-			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$ser_extra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceInfo[$settings['PREFIX'].'_id']}'", __LINE__, __FILE__);
+			$serExtra = $db->real_escape(myadmin_stringify($extra));
+			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$serExtra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceInfo[$settings['PREFIX'].'_id']}'", __LINE__, __FILE__);
 			myadmin_log(self::$module, 'info', "activateSubscription Got Subscription ID: {$subscriptoinId}", __LINE__, __FILE__);
 			/*
 			  $request = array(
@@ -170,8 +170,8 @@ class Plugin {
 			request_log(self::$module, $serviceInfo[$settings['PREFIX'].'_custid'], __FUNCTION__, 'ppa', 'createWebspace', $request, $result);
 			$webspace_id = $result['result']['webspace_id'];
 			$extra[3] = $webspace_id;
-			$ser_extra = $db->real_escape(myadmin_stringify($extra));
-			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$ser_extra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceInfo[$settings['PREFIX'].'_id']}'", __LINE__, __FILE__);
+			$serExtra = $db->real_escape(myadmin_stringify($extra));
+			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$serExtra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceInfo[$settings['PREFIX'].'_id']}'", __LINE__, __FILE__);
 			myadmin_log(self::$module, 'info', "Got Website ID: {$webspace_id}", __LINE__, __FILE__);
 			if (is_numeric($webspace_id)) {
 				//myadmin_log(self::$module, 'info', "Success, Response: " . var_export($vesta->response, TRUE), __LINE__, __FILE__);;
