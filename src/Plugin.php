@@ -45,7 +45,7 @@ class Plugin {
 				$data['name'] = str_replace('@', ' ', $data['account_lid']);
 			}
 			list($first, $last) = explode(' ', $data['name']);
-			$request_person = array(
+			$requestPerson = array(
 				'first_name' => $first,
 				'last_name' => $last,
 				'company_name' => (isset($data['company']) ? $data['company'] : ''),
@@ -65,7 +65,7 @@ class Plugin {
 				'ext_num' => '',
 			);
 			$request = array(
-				'person' => $request_person,
+				'person' => $requestPerson,
 				'address' => $request_address,
 				'phone' => $request_phone,
 				'email' => $data['account_lid'],
@@ -93,7 +93,7 @@ class Plugin {
 					'login' => $username,
 					'password' => $password
 				),
-				'person' => $request_person,
+				'person' => $requestPerson,
 				'address' => $request_address,
 				'phone' => $request_phone,
 				'email' => $data['account_lid'],
