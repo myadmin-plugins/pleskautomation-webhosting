@@ -2,7 +2,7 @@
 include_once(__DIR__.'/../../../include/functions.inc.php');
 $ppaConnector = get_webhosting_ppa_instance();
 // let us form an array with account data
-$st_id = (isset($_SERVER['argv'][1]) ? (int)$_SERVER['argv'][1] : 12);
+$st_id = (isset($_SERVER['argv'][1]) ? (int) $_SERVER['argv'][1] : 12);
 $request = array(
 	'st_id' => $st_id,
 	'get_resources' => true,

@@ -7,7 +7,7 @@ $data = $GLOBALS['tf']->accounts->read(2773);
 list($first, $last) = explode(' ', $data['name']);
 $request = array(
 	'subscription_id' => $subscriptoinId,
-	'resource_type_ids' => array(),	// array of ints of the type ids i want stats for
+	'resource_type_ids' => array(), // array of ints of the type ids i want stats for
 );
 // Make the pem.addAccount call.
 // The PPAConnector instance will form a proper XML-RPC request by itself.
