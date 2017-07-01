@@ -176,10 +176,11 @@ class Plugin {
 			if (is_numeric($webspace_id)) {
 				//myadmin_log(self::$module, 'info', "Success, Response: " . var_export($vesta->response, TRUE), __LINE__, __FILE__);;
 				website_welcome_email($serviceClass->getId());
+				$event['success'] = TRUE;
 			} else {
 				add_output('Error Creating Website');
 				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($result, TRUE), __LINE__, __FILE__);
-				return FALSE;
+				$event['success'] = FALSE;
 			}
 			/*
 			  $request = array(
