@@ -40,7 +40,7 @@ class Plugin {
 			$password = website_get_password($serviceClass->getId());
 			$username = get_new_webhosting_username($serviceClass->getId(), $hostname, $serviceClass->getServer());
 			$ppaConnector = get_webhosting_ppa_instance($serverdata);
-			$service_template_id = 46;
+			$serviceTemplateId = 46;
 			if (!isset($data['name']) || trim($data['name']) == '') {
 				$data['name'] = str_replace('@', ' ', $data['account_lid']);
 			}
@@ -58,7 +58,7 @@ class Plugin {
 				'country' => convert_country_iso2($data['country']),
 				'state' => (isset($data['state']) ? $data['state'] : ''),
 			);
-			$request_phone = array(
+			$requestPhone = array(
 				'country_code' => '1',
 				'area_code' => '',
 				'phone_num' => (isset($data['phone']) ? $data['phone'] : ''),
@@ -67,7 +67,7 @@ class Plugin {
 			$request = array(
 				'person' => $requestPerson,
 				'address' => $request_address,
-				'phone' => $request_phone,
+				'phone' => $requestPhone,
 				'email' => $data['account_lid'],
 			);
 			try {
@@ -95,7 +95,7 @@ class Plugin {
 				),
 				'person' => $requestPerson,
 				'address' => $request_address,
-				'phone' => $request_phone,
+				'phone' => $requestPhone,
 				'email' => $data['account_lid'],
 			);
 			try {
@@ -115,7 +115,7 @@ class Plugin {
 			myadmin_log(self::$module, 'info', "addAccountMember Got Account ID: {$user_id}  Username: {$username}  Password: {$password}", __LINE__, __FILE__);
 			$request = array(
 				'account_id' => $accountId,
-				'service_template_id' => $service_template_id,
+				'service_template_id' => $serviceTemplateId,
 			);
 			try {
 				$result = $ppaConnector->activateSubscription($request);
