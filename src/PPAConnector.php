@@ -23,18 +23,18 @@ class PPAConnector {
 	}
 
 	/**
-	 * @param $IP
+	 * @param $ipAddress
 	 * @param $login
 	 * @param $password
 	 * @return mixed
 	 */
-	static public function getInstance($IP, $login, $password) {
+	static public function getInstance($ipAddress, $login, $password) {
 		$password = str_replace('?', '%3F', $password);
 		if (!self::$xmlrpcProxy) {
 			// Here go communication parameters for our management node
 /*
 			// Zend/XmlRpc
-			$xmlrpcClient = new Zend_XmlRpc_Client("https://{$IP}:8440/RPC2");
+			$xmlrpcClient = new Zend_XmlRpc_Client("https://{$ipAddress}:8440/RPC2");
 			$httpClient = $xmlrpcClient->getHttpClient();
 			$httpClient->setAuth($login, $password, Zend_Http_Client::AUTH_BASIC);
 			$httpClient->setConfig(array('timeout' => 45));
@@ -42,7 +42,7 @@ class PPAConnector {
 */
 /*
 			// XML_RPC
-			$url = "https://{$login}:{$password}@{$IP}:8440/RPC2";
+			$url = "https://{$login}:{$password}@{$ipAddress}:8440/RPC2";
 			$options = array(
 				'prefix' => 'pem.',
 				'debug' => FALSE,
@@ -53,7 +53,7 @@ class PPAConnector {
 			if (!isset($GLOBALS['HTTP_RAW_POST_DATA']))
 				$GLOBALS['HTTP_RAW_POST_DATA'] = file_get_contents('php://input');
 			// XML/RPC2
-			$url = "https://{$login}:{$password}@{$IP}:8440/RPC2";
+			$url = "https://{$login}:{$password}@{$ipAddress}:8440/RPC2";
 			//echo "$url\n";exit;
 			$options = array(
 				'prefix' => 'pem.',

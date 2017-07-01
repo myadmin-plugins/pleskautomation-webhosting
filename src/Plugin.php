@@ -79,16 +79,16 @@ class Plugin {
 				myadmin_log(self::$module, 'info', 'addAccount Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
 			request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'addAccount', $request, $result);
-			$account_id = $result['result']['account_id'];
+			$accountId = $result['result']['account_id'];
 			if (!is_array($extra))
 				$extra = [];
-			$extra[0] = $account_id;
+			$extra[0] = $accountId;
 			$db = get_module_db(self::$module);
 			$serExtra = $db->real_escape(myadmin_stringify($extra));
 			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$serExtra}' where {$settings['PREFIX']}_id='{$serviceClass->getId()}'", __LINE__, __FILE__);
-			myadmin_log(self::$module, 'info', "addAccount Got Account ID: {$account_id}", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "addAccount Got Account ID: {$accountId}", __LINE__, __FILE__);
 			$request = array(
-				'account_id' => $account_id,
+				'account_id' => $accountId,
 				'auth' => array(
 					'login' => $username,
 					'password' => $password
@@ -114,7 +114,7 @@ class Plugin {
 			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$serExtra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceClass->getId()}'", __LINE__, __FILE__);
 			myadmin_log(self::$module, 'info', "addAccountMember Got Account ID: {$user_id}  Username: {$username}  Password: {$password}", __LINE__, __FILE__);
 			$request = array(
-				'account_id' => $account_id,
+				'account_id' => $accountId,
 				'service_template_id' => $service_template_id,
 			);
 			try {
@@ -195,7 +195,7 @@ class Plugin {
 			  }
 			  echo "Success Removing Subscription\n";
 			  $request = array(
-			  'account_id' => $account_id,
+			  'account_id' => $accountId,
 			  );
 			  $result = $ppaConnector->removeAccount($request);
 			  //echo "Result:";var_dump($result);echo "\n";
@@ -227,7 +227,7 @@ class Plugin {
 				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__);
 				$event['success'] = FALSE;
 			} else {
-				list($account_id, $user_id, $subscriptoinId, $webspace_id) = $extra;
+				list($accountId, $user_id, $subscriptoinId, $webspace_id) = $extra;
 				function_requirements('get_webhosting_ppa_instance');
 				$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				$request = ['subscription_id' => $subscriptoinId];

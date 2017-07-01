@@ -5,10 +5,10 @@ $ppaConnector = get_webhosting_ppa_instance();
 $password = _randomstring(10);
 $data = $GLOBALS['tf']->accounts->read(2773);
 list($first, $last) = explode(' ', $data['name']);
-$account_id = 127;
+$accountId = 127;
 $service_template_id = 24;
 $request = array(
-	'account_id' => $account_id,
+	'account_id' => $accountId,
 	'service_template_id' => $service_template_id,
 );
 // Make the pem.addAccount call.
