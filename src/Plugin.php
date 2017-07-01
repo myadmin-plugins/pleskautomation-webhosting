@@ -83,6 +83,7 @@ class Plugin {
 			if (!is_array($extra))
 				$extra = [];
 			$extra[0] = $account_id;
+			$db = get_module_db(self::$module);
 			$serExtra = $db->real_escape(myadmin_stringify($extra));
 			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$serExtra}' where {$settings['PREFIX']}_id='{$serviceClass->getId()}'", __LINE__, __FILE__);
 			myadmin_log(self::$module, 'info', "addAccount Got Account ID: {$account_id}", __LINE__, __FILE__);
