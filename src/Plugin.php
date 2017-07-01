@@ -50,7 +50,7 @@ class Plugin {
 				'last_name' => $last,
 				'company_name' => (isset($data['company']) ? $data['company'] : ''),
 			);
-			$request_address = array(
+			$requestAddress = array(
 				'street_name' => (isset($data['address']) ? $data['address'] : ''),
 				'address2' => (isset($data['address2']) ? $data['address2'] : ''),
 				'zipcode' => (isset($data['zip']) ? $data['zip'] : ''),
@@ -66,7 +66,7 @@ class Plugin {
 			);
 			$request = array(
 				'person' => $requestPerson,
-				'address' => $request_address,
+				'address' => $requestAddress,
 				'phone' => $requestPhone,
 				'email' => $data['account_lid'],
 			);
@@ -94,7 +94,7 @@ class Plugin {
 					'password' => $password
 				),
 				'person' => $requestPerson,
-				'address' => $request_address,
+				'address' => $requestAddress,
 				'phone' => $requestPhone,
 				'email' => $data['account_lid'],
 			);
@@ -107,12 +107,12 @@ class Plugin {
 				myadmin_log(self::$module, 'info', 'addAccountMember Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
 			request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'addAccountMember', $request, $result);
-			$user_id = $result['result']['user_id'];
+			$userId = $result['result']['user_id'];
 			$username = $db->real_escape($username);
-			$extra[1] = $user_id;
+			$extra[1] = $userId;
 			$serExtra = $db->real_escape(myadmin_stringify($extra));
 			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$serExtra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceClass->getId()}'", __LINE__, __FILE__);
-			myadmin_log(self::$module, 'info', "addAccountMember Got Account ID: {$user_id}  Username: {$username}  Password: {$password}", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "addAccountMember Got Account ID: {$userId}  Username: {$username}  Password: {$password}", __LINE__, __FILE__);
 			$request = array(
 				'account_id' => $accountId,
 				'service_template_id' => $serviceTemplateId,
@@ -168,12 +168,12 @@ class Plugin {
 				myadmin_log(self::$module, 'info', 'createWebspace Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
 			request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'createWebspace', $request, $result);
-			$webspace_id = $result['result']['webspace_id'];
-			$extra[3] = $webspace_id;
+			$webspaceId = $result['result']['webspace_id'];
+			$extra[3] = $webspaceId;
 			$serExtra = $db->real_escape(myadmin_stringify($extra));
 			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$serExtra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceClass->getId()}'", __LINE__, __FILE__);
-			myadmin_log(self::$module, 'info', "Got Website ID: {$webspace_id}", __LINE__, __FILE__);
-			if (is_numeric($webspace_id)) {
+			myadmin_log(self::$module, 'info', "Got Website ID: {$webspaceId}", __LINE__, __FILE__);
+			if (is_numeric($webspaceId)) {
 				//myadmin_log(self::$module, 'info', "Success, Response: " . var_export($vesta->response, TRUE), __LINE__, __FILE__);;
 				website_welcome_email($serviceClass->getId());
 				$event['success'] = TRUE;
@@ -227,7 +227,7 @@ class Plugin {
 				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__);
 				$event['success'] = FALSE;
 			} else {
-				list($accountId, $user_id, $subscriptoinId, $webspace_id) = $extra;
+				list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
 				function_requirements('get_webhosting_ppa_instance');
 				$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				$request = ['subscription_id' => $subscriptoinId];
