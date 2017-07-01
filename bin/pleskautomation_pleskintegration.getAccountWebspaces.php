@@ -6,7 +6,7 @@ $request = array(
 	'account_id' => $accountId,
 );
 $result = $ppaConnector->__call('pleskintegration.getAccountWebspaces', $request);
-echo preg_replace("/$\s*array\s+\(/msiU", "array(", var_export($result, true));
+echo preg_replace("/$\s*array\s+\(/msiU", "array(", var_export($result, TRUE));
 echo "\n";
 try {
 	PPAConnector::checkResponse($result);

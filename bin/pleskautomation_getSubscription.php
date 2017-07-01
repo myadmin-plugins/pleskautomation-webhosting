@@ -4,10 +4,10 @@ $ppaConnector = get_webhosting_ppa_instance();
 $subscriptoinId = intval($_SERVER['argv'][1]);
 $request = array(
 	'subscription_id' => $subscriptoinId,
-	'get_resources' => true,
+	'get_resources' => TRUE,
 );
 $result = $ppaConnector->getSubscription($request);
-echo preg_replace("/$\s*array\s+\(/msiU", "array(", var_export($result, true));
+echo preg_replace("/$\s*array\s+\(/msiU", "array(", var_export($result, TRUE));
 echo "\n";
 try {
 	PPAConnector::checkResponse($result);

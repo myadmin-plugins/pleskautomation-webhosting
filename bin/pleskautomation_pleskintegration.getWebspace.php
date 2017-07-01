@@ -6,7 +6,7 @@ $request = array(
 	'webspace_id' => $webspaceId,
 );
 $result = $ppaConnector->__call('pleskintegration.getWebspace', $request);
-echo preg_replace("/$\s*array\s+\(/msiU", "array(", var_export($result, true));
+echo preg_replace("/$\s*array\s+\(/msiU", "array(", var_export($result, TRUE));
 echo "\n";
 try {
 	PPAConnector::checkResponse($result);
