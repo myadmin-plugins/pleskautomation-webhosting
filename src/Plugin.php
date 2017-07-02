@@ -22,6 +22,7 @@ class Plugin {
 			self::$module.'.settings' => [__CLASS__, 'getSettings'],
 			self::$module.'.activate' => [__CLASS__, 'getActivate'],
 			self::$module.'.reactivate' => [__CLASS__, 'getReactivate'],
+			self::$module.'.deactivate' => [__CLASS__, 'getDeactivate'],
 		];
 	}
 
@@ -240,6 +241,16 @@ class Plugin {
 				}
 				myadmin_log(self::$module, 'info', 'enableSubscription Called got '.json_encode($result), __LINE__, __FILE__);
 			}
+			$event->stopPropagation();
+		}
+	}
+
+	public static function getDeactivate(GenericEvent $event) {
+		if ($event['category'] == SERVICE_TYPES_WEB_PPA) {
+			myadmin_log(self::$module, 'info', 'PleskAutomation Deactivation', __LINE__, __FILE__);
+			$serviceClass = $event->getSubject();
+			$serviceTypes = run_event('get_service_types', FALSE, self::$module);
+			$settings = get_module_settings(self::$module);
 			$event->stopPropagation();
 		}
 	}
