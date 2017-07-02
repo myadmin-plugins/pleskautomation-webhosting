@@ -215,7 +215,6 @@ class Plugin {
 	public static function getReactivate(GenericEvent $event) {
 		if ($event['category'] == SERVICE_TYPES_WEB_PPA) {
 			$serviceClass = $event->getSubject();
-			$settings = get_module_settings(self::$module);
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
 			if (sizeof($extra) == 0)
@@ -227,7 +226,8 @@ class Plugin {
 				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__);
 				$event['success'] = FALSE;
 			} else {
-				list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
+				//list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
+				$subscriptoinId = $extra[2];
 				function_requirements('get_webhosting_ppa_instance');
 				$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				$request = ['subscription_id' => $subscriptoinId];
@@ -247,8 +247,6 @@ class Plugin {
 		if ($event['category'] == SERVICE_TYPES_WEB_PPA) {
 			myadmin_log(self::$module, 'info', 'PleskAutomation Deactivation', __LINE__, __FILE__);
 			$serviceClass = $event->getSubject();
-			$serviceTypes = run_event('get_service_types', FALSE, self::$module);
-			$settings = get_module_settings(self::$module);
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
 			if (sizeof($extra) == 0) {
@@ -256,7 +254,8 @@ class Plugin {
 				dialog('Error', $msg);
 				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__);
 			} else {
-				list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
+				//list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
+				$subscriptoinId = $extra[2];
 				$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				$request = array(
 					'subscription_id' => $subscriptoinId,
@@ -278,8 +277,6 @@ class Plugin {
 		if ($event['category'] == SERVICE_TYPES_WEB_PPA) {
 			myadmin_log(self::$module, 'info', 'PleskAutomation Termination', __LINE__, __FILE__);
 			$serviceClass = $event->getSubject();
-			$serviceTypes = run_event('get_service_types', FALSE, self::$module);
-			$settings = get_module_settings(self::$module);
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
 			if (sizeof($extra) == 0) {
@@ -288,7 +285,8 @@ class Plugin {
 				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__);
 				return false;
 			} else {
-				list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
+				//list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
+				$subscriptoinId = $extra[2];
 				try {
 					$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				} catch (Exception $e) {
