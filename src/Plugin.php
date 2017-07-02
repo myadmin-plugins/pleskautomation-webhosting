@@ -265,9 +265,9 @@ class Plugin {
 				try {
 					\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 				} catch (Exception $e) {
-					echo 'Caught exception: ' . $e->getMessage() . "\n";
+					echo 'Caught exception: '.$e->getMessage() . "\n";
 				}
-				myadmin_log(self::$module, 'info', 'disableSubscription Called got ' . json_encode($result), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'disableSubscription Called got '.json_encode($result), __LINE__, __FILE__);
 			}
 			$event->stopPropagation();
 		}
@@ -290,7 +290,7 @@ class Plugin {
 				try {
 					$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				} catch (Exception $e) {
-					myadmin_log(self::$module, 'info', 'PPAConnector::getInstance Caught exception: ' . $e->getMessage(), __LINE__, __FILE__);
+					myadmin_log(self::$module, 'info', 'PPAConnector::getInstance Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 					return false;
 				}
 				$request = array(
@@ -299,14 +299,14 @@ class Plugin {
 				try {
 					$result = $ppaConnector->disableSubscription($request);
 				} catch (Exception $e) {
-					myadmin_log(self::$module, 'info', 'ppaConnector->disableSubscription Caught exception: ' . $e->getMessage(), __LINE__, __FILE__);
+					myadmin_log(self::$module, 'info', 'ppaConnector->disableSubscription Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 					return false;
 				}
 				//echo "Result:";var_dump($result);echo "\n";
 				try {
 					\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 				} catch (Exception $e) {
-					myadmin_log(self::$module, 'info', 'PPAConnector::checkResponse Caught exception: ' . $e->getMessage(), __LINE__, __FILE__);
+					myadmin_log(self::$module, 'info', 'PPAConnector::checkResponse Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 					return false;
 				}
 				/*
@@ -333,7 +333,7 @@ class Plugin {
 				  }
 				  echo "Success Removing Account.\n";
 				 */
-				myadmin_log(self::$module, 'info', 'disableSubscription Called got ' . json_encode($result), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'disableSubscription Called got '.json_encode($result), __LINE__, __FILE__);
 				return true;
 			}
 			$event->stopPropagation();
