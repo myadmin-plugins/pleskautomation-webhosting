@@ -252,6 +252,29 @@ class Plugin {
 			$serviceClass = $event->getSubject();
 			$serviceTypes = run_event('get_service_types', FALSE, self::$module);
 			$settings = get_module_settings(self::$module);
+			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
+			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
+			$hash = $serverdata[$settings['PREFIX'].'_key'];
+			$ip = $serverdata[$settings['PREFIX'].'_ip'];
+			if (sizeof($extra) == 0) {
+				$msg = 'Blank/Empty Plesk Subscription Info, so either dont know what to remove or nothing to remove';
+				dialog('Error', $msg);
+				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__);
+			} else {
+				list($account_id, $userId, $subscriptoinId, $webspaceId) = $extra;
+				$ppaConnector = get_webhosting_ppa_instance($serverdata);
+				$request = array(
+					'subscription_id' => $subscriptoinId,
+				);
+				$result = $ppaConnector->disableSubscription($request);
+				//echo "Result:";var_dump($result);echo "\n";
+				try {
+					\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
+				} catch (Exception $e) {
+					echo 'Caught exception: ' . $e->getMessage() . "\n";
+				}
+				myadmin_log(self::$module, 'info', 'disableSubscription Called got ' . json_encode($result), __LINE__, __FILE__);
+			}
 			$event->stopPropagation();
 		}
 	}
@@ -262,6 +285,66 @@ class Plugin {
 			$serviceClass = $event->getSubject();
 			$serviceTypes = run_event('get_service_types', FALSE, self::$module);
 			$settings = get_module_settings(self::$module);
+			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
+			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
+			$hash = $serverdata[$settings['PREFIX'].'_key'];
+			$ip = $serverdata[$settings['PREFIX'].'_ip'];
+			if (sizeof($extra) == 0) {
+				$msg = 'Blank/Empty Plesk Subscription Info, so either dont know what to remove or nothing to remove';
+				dialog('Error', $msg);
+				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__);
+				return false;
+			} else {
+				list($account_id, $userId, $subscriptoinId, $webspaceId) = $extra;
+				try {
+					$ppaConnector = get_webhosting_ppa_instance($serverdata);
+				} catch (Exception $e) {
+					myadmin_log(self::$module, 'info', 'PPAConnector::getInstance Caught exception: ' . $e->getMessage(), __LINE__, __FILE__);
+					return false;
+				}
+				$request = array(
+					'subscription_id' => $subscriptoinId,
+				);
+				try {
+					$result = $ppaConnector->disableSubscription($request);
+				} catch (Exception $e) {
+					myadmin_log(self::$module, 'info', 'ppaConnector->disableSubscription Caught exception: ' . $e->getMessage(), __LINE__, __FILE__);
+					return false;
+				}
+				//echo "Result:";var_dump($result);echo "\n";
+				try {
+					\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
+				} catch (Exception $e) {
+					myadmin_log(self::$module, 'info', 'PPAConnector::checkResponse Caught exception: ' . $e->getMessage(), __LINE__, __FILE__);
+					return false;
+				}
+				/*
+				  $request = array(
+				  'subscription_id' => $subscriptoinId,
+				  );
+				  $result = $ppaConnector->removeSubscription($request);
+				  //echo "Result:";var_dump($result);echo "\n";
+				  try {
+					\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
+				  } catch (Exception $e) {
+				  echo 'Caught exception: '.$e->getMessage().PHP_EOL;
+				  }
+				  echo "Success Removing Subscription\n";
+				  $request = array(
+				  'account_id' => $account_id,
+				  );
+				  $result = $ppaConnector->removeAccount($request);
+				  //echo "Result:";var_dump($result);echo "\n";
+				  try {
+					\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
+				  } catch (Exception $e) {
+					  echo 'Caught exception: '.$e->getMessage().PHP_EOL;
+				  }
+				  echo "Success Removing Account.\n";
+				 */
+				myadmin_log(self::$module, 'info', 'disableSubscription Called got ' . json_encode($result), __LINE__, __FILE__);
+				return true;
+			}
 			$event->stopPropagation();
 		}
 	}
