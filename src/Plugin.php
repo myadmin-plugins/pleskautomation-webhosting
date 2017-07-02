@@ -34,7 +34,6 @@ class Plugin {
 			$settings = get_module_settings(self::$module);
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
 			$data = $GLOBALS['tf']->accounts->read($serviceClass->getCustid());
-			$hash = $serverdata[$settings['PREFIX'].'_key'];
 			$ip = $serverdata[$settings['PREFIX'].'_ip'];
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
 			$hostname = $serviceClass->getHostname();
@@ -218,8 +217,6 @@ class Plugin {
 			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
-			$hash = $serverdata[$settings['PREFIX'].'_key'];
-			$ip = $serverdata[$settings['PREFIX'].'_ip'];
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
 			if (sizeof($extra) == 0)
 				function_requirements('get_plesk_info_from_domain');
@@ -254,14 +251,12 @@ class Plugin {
 			$settings = get_module_settings(self::$module);
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
-			$hash = $serverdata[$settings['PREFIX'].'_key'];
-			$ip = $serverdata[$settings['PREFIX'].'_ip'];
 			if (sizeof($extra) == 0) {
 				$msg = 'Blank/Empty Plesk Subscription Info, so either dont know what to remove or nothing to remove';
 				dialog('Error', $msg);
 				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__);
 			} else {
-				list($account_id, $userId, $subscriptoinId, $webspaceId) = $extra;
+				list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
 				$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				$request = array(
 					'subscription_id' => $subscriptoinId,
@@ -287,15 +282,13 @@ class Plugin {
 			$settings = get_module_settings(self::$module);
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
-			$hash = $serverdata[$settings['PREFIX'].'_key'];
-			$ip = $serverdata[$settings['PREFIX'].'_ip'];
 			if (sizeof($extra) == 0) {
 				$msg = 'Blank/Empty Plesk Subscription Info, so either dont know what to remove or nothing to remove';
 				dialog('Error', $msg);
 				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__);
 				return false;
 			} else {
-				list($account_id, $userId, $subscriptoinId, $webspaceId) = $extra;
+				list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
 				try {
 					$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				} catch (Exception $e) {
@@ -331,7 +324,7 @@ class Plugin {
 				  }
 				  echo "Success Removing Subscription\n";
 				  $request = array(
-				  'account_id' => $account_id,
+				  'account_id' => $accountId,
 				  );
 				  $result = $ppaConnector->removeAccount($request);
 				  //echo "Result:";var_dump($result);echo "\n";
