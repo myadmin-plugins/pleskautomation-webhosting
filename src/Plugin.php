@@ -8,8 +8,8 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 class Plugin {
 
 	public static $name = 'PleskAutomation Webhosting';
-	public static $description = 'Allows selling of PleskAutomation Server and VPS License Types.  More info at https://www.netenberg.com/pleskautomation.php';
-	public static $help = 'It provides more than one million end users the ability to quickly install dozens of the leading open source content management systems into their web space.  	Must have a pre-existing cPanel license with cPanelDirect to purchase a pleskautomation license. Allow 10 minutes for activation.';
+	public static $description = 'Plesk Automation is a scalable, multi-server automation solution for shared hosting, giving growing hosters the power, performance, and scale previously only available to hosting giants.  More info at http://www.odin.com/support/automation-suite/ppa/';
+	public static $help = '';
 	public static $module = 'webhosting';
 	public static $type = 'service';
 
