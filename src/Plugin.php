@@ -265,7 +265,7 @@ class Plugin {
 				try {
 					\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 				} catch (Exception $e) {
-					echo 'Caught exception: '.$e->getMessage() . "\n";
+					echo 'Caught exception: '.$e->getMessage()."\n";
 				}
 				myadmin_log(self::$module, 'info', 'disableSubscription Called got '.json_encode($result), __LINE__, __FILE__);
 			}
@@ -283,7 +283,7 @@ class Plugin {
 				$msg = 'Blank/Empty Plesk Subscription Info, so either dont know what to remove or nothing to remove';
 				dialog('Error', $msg);
 				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__);
-				return false;
+				return FALSE;
 			} else {
 				//list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
 				$subscriptoinId = $extra[2];
@@ -291,7 +291,7 @@ class Plugin {
 					$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				} catch (Exception $e) {
 					myadmin_log(self::$module, 'info', 'PPAConnector::getInstance Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
-					return false;
+					return FALSE;
 				}
 				$request = array(
 					'subscription_id' => $subscriptoinId,
@@ -300,14 +300,14 @@ class Plugin {
 					$result = $ppaConnector->disableSubscription($request);
 				} catch (Exception $e) {
 					myadmin_log(self::$module, 'info', 'ppaConnector->disableSubscription Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
-					return false;
+					return FALSE;
 				}
 				//echo "Result:";var_dump($result);echo "\n";
 				try {
 					\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 				} catch (Exception $e) {
 					myadmin_log(self::$module, 'info', 'PPAConnector::checkResponse Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
-					return false;
+					return FALSE;
 				}
 				/*
 				  $request = array(
@@ -334,7 +334,7 @@ class Plugin {
 				  echo "Success Removing Account.\n";
 				 */
 				myadmin_log(self::$module, 'info', 'disableSubscription Called got '.json_encode($result), __LINE__, __FILE__);
-				return true;
+				return TRUE;
 			}
 			$event->stopPropagation();
 		}
