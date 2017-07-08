@@ -1,5 +1,5 @@
 <?php
-include_once(__DIR__.'/../../../include/functions.inc.php');
+include_once(__DIR__.'/../../../../include/functions.inc.php');
 require_once(INCLUDE_ROOT.'/webhosting/class.pleskautomation.php');
 $server = NEW_WEBSITE_PPA_SERVER;
 $serverdata = get_service_master($server, $module);
