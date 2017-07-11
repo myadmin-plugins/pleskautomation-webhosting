@@ -374,6 +374,7 @@ class Plugin {
 	public static function getRequirements(GenericEvent $event) {
 		$loader = $event->getSubject();
 		$loader->add_requirement('get_pleskautomation_info_from_domain', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/get_pleskautomation_info_from_domain.php');
+		$loader->add_requirement('get_webhosting_ppa_instance', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/get_webhosting_ppa_instance.php');
 	}
 
 	public static function getSettings(GenericEvent $event) {
