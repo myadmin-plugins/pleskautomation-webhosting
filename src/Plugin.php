@@ -24,6 +24,7 @@ class Plugin {
 			self::$module.'.reactivate' => [__CLASS__, 'getReactivate'],
 			self::$module.'.deactivate' => [__CLASS__, 'getDeactivate'],
 			self::$module.'.terminate' => [__CLASS__, 'getTerminate'],
+			'function.requirements' => [__CLASS__, 'getRequirements'],
 		];
 	}
 
@@ -218,8 +219,8 @@ class Plugin {
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
 			if (sizeof($extra) == 0)
-				function_requirements('get_plesk_info_from_domain');
-				$extra = get_plesk_info_from_domain($serviceClass->getHostname());
+				function_requirements('get_pleskautomation_info_from_domain');
+				$extra = get_pleskautomation_info_from_domain($serviceClass->getHostname());
 			if (sizeof($extra) == 0) {
 				$msg = 'Blank/Empty Plesk Subscription Info, Email support@interserver.net about this';
 				dialog('Error', $msg);
@@ -372,18 +373,7 @@ class Plugin {
 
 	public static function getRequirements(GenericEvent $event) {
 		$loader = $event->getSubject();
-		$loader->add_requirement('crud_pleskautomation_list', '/../vendor/detain/crud/src/crud/crud_pleskautomation_list.php');
-		$loader->add_requirement('crud_reusable_pleskautomation', '/../vendor/detain/crud/src/crud/crud_reusable_pleskautomation.php');
-		$loader->add_requirement('get_pleskautomation_licenses', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/pleskautomation.inc.php');
-		$loader->add_requirement('get_pleskautomation_list', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/pleskautomation.inc.php');
-		$loader->add_requirement('pleskautomation_licenses_list', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/pleskautomation_licenses_list.php');
-		$loader->add_requirement('pleskautomation_list', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/pleskautomation_list.php');
-		$loader->add_requirement('get_available_pleskautomation', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/pleskautomation.inc.php');
-		$loader->add_requirement('activate_pleskautomation', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/pleskautomation.inc.php');
-		$loader->add_requirement('get_reusable_pleskautomation', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/pleskautomation.inc.php');
-		$loader->add_requirement('reusable_pleskautomation', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/reusable_pleskautomation.php');
-		$loader->add_requirement('class.PleskAutomation', '/../vendor/detain/pleskautomation-webhosting/src/PleskAutomation.php');
-		$loader->add_requirement('vps_add_pleskautomation', '/vps/addons/vps_add_pleskautomation.php');
+		$loader->add_requirement('get_pleskautomation_info_from_domain', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/get_pleskautomation_info_from_domain.php');
 	}
 
 	public static function getSettings(GenericEvent $event) {
