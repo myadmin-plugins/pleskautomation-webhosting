@@ -42,6 +42,7 @@ class Plugin {
 				$hostname = $serviceClass->getId().'.server.com';
 			$password = website_get_password($serviceClass->getId());
 			$username = get_new_webhosting_username($serviceClass->getId(), $hostname, $serviceClass->getServer());
+			include_once(__DIR__.'/get_webhosting_ppa_instance.php');
 			$ppaConnector = get_webhosting_ppa_instance($serverdata);
 			$serviceTemplateId = 46;
 			if (!isset($data['name']) || trim($data['name']) == '') {
@@ -220,7 +221,8 @@ class Plugin {
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
 			if (sizeof($extra) == 0)
 				function_requirements('get_pleskautomation_info_from_domain');
-				$extra = get_pleskautomation_info_from_domain($serviceClass->getHostname());
+				include_once(__DIR__.'/get_pleskautomation_info_from_domain.php');
+				$extra = \get_pleskautomation_info_from_domain($serviceClass->getHostname());
 			if (sizeof($extra) == 0) {
 				$msg = 'Blank/Empty Plesk Subscription Info, Email support@interserver.net about this';
 				dialog('Error', $msg);
@@ -230,6 +232,7 @@ class Plugin {
 				//list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
 				$subscriptoinId = $extra[2];
 				function_requirements('get_webhosting_ppa_instance');
+			include_once(__DIR__.'/get_webhosting_ppa_instance.php');
 				$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				$request = ['subscription_id' => $subscriptoinId];
 				$result = $ppaConnector->enableSubscription($request);
@@ -257,6 +260,7 @@ class Plugin {
 			} else {
 				//list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
 				$subscriptoinId = $extra[2];
+			include_once(__DIR__.'/get_webhosting_ppa_instance.php');
 				$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				$request = array(
 					'subscription_id' => $subscriptoinId,
@@ -289,6 +293,7 @@ class Plugin {
 				//list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
 				$subscriptoinId = $extra[2];
 				try {
+			include_once(__DIR__.'/get_webhosting_ppa_instance.php');
 					$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				} catch (Exception $e) {
 					myadmin_log(self::$module, 'info', 'PPAConnector::getInstance Caught exception: '.$e->getMessage(), __LINE__, __FILE__);

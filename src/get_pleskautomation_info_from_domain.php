@@ -19,6 +19,7 @@ function get_pleskautomation_info_from_domain($hostname) {
 	$db->query("select * from {$settings['PREFIX']}_masters where {$settings['PREFIX']}_type=" . SERVICE_TYPES_WEB_PPA . "  order by {$settings['PREFIX']}_available desc limit 1", __LINE__, __FILE__);
 	$db->next_record(MYSQL_ASSOC);
 	$serverData = $db->Record;
+	include_once(__DIR__.'/get_webhosting_ppa_instance.php');
 	$ppaConnector = get_webhosting_ppa_instance($serverData);
 	try {
 		$result = $ppaConnector->__call('pleskintegration.getWebspaceIDByPrimaryDomain', array('domain' => $hostname));
