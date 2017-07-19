@@ -219,10 +219,11 @@ class Plugin {
 			$serviceClass = $event->getSubject();
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
-			if (sizeof($extra) == 0)
+			if (sizeof($extra) == 0) {
 				function_requirements('get_pleskautomation_info_from_domain');
 				include_once(__DIR__.'/get_pleskautomation_info_from_domain.php');
 				$extra = \get_pleskautomation_info_from_domain($serviceClass->getHostname());
+			}
 			if (sizeof($extra) == 0) {
 				$msg = 'Blank/Empty Plesk Subscription Info, Email support@interserver.net about this';
 				dialog('Error', $msg);
