@@ -29,7 +29,7 @@ class Plugin {
 	}
 
 	public static function getActivate(GenericEvent $event) {
-		if ($event['category'] == SERVICE_TYPES_WEB_PPA) {
+		if ($event['category'] == get_service_define('WEB_PPA')) {
 			myadmin_log(self::$module, 'info', 'PleskAutomation Activation', __LINE__, __FILE__);
 			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
@@ -215,7 +215,7 @@ class Plugin {
 	}
 
 	public static function getReactivate(GenericEvent $event) {
-		if ($event['category'] == SERVICE_TYPES_WEB_PPA) {
+		if ($event['category'] == get_service_define('WEB_PPA')) {
 			$serviceClass = $event->getSubject();
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
@@ -249,7 +249,7 @@ class Plugin {
 	}
 
 	public static function getDeactivate(GenericEvent $event) {
-		if ($event['category'] == SERVICE_TYPES_WEB_PPA) {
+		if ($event['category'] == get_service_define('WEB_PPA')) {
 			myadmin_log(self::$module, 'info', 'PleskAutomation Deactivation', __LINE__, __FILE__);
 			$serviceClass = $event->getSubject();
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
@@ -280,7 +280,7 @@ class Plugin {
 	}
 
 	public static function getTerminate(GenericEvent $event) {
-		if ($event['category'] == SERVICE_TYPES_WEB_PPA) {
+		if ($event['category'] == get_service_define('WEB_PPA')) {
 			myadmin_log(self::$module, 'info', 'PleskAutomation Termination', __LINE__, __FILE__);
 			$serviceClass = $event->getSubject();
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
@@ -348,7 +348,7 @@ class Plugin {
 	}
 
 	public static function getChangeIp(GenericEvent $event) {
-		if ($event['category'] == SERVICE_TYPES_WEB_PPA) {
+		if ($event['category'] == get_service_define('WEB_PPA')) {
 			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
 			$pleskautomation = new PleskAutomation(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
@@ -385,7 +385,7 @@ class Plugin {
 
 	public static function getSettings(GenericEvent $event) {
 		$settings = $event->getSubject();
-		$settings->add_select_master(self::$module, 'Default Servers', self::$module, 'new_website_ppa_server', 'Default Plesk Automation Setup Server', NEW_WEBSITE_PPA_SERVER, SERVICE_TYPES_WEB_PPA);
+		$settings->add_select_master(self::$module, 'Default Servers', self::$module, 'new_website_ppa_server', 'Default Plesk Automation Setup Server', NEW_WEBSITE_PPA_SERVER, get_service_define('WEB_PPA'));
 		$settings->add_dropdown_setting(self::$module, 'Out of Stock', 'outofstock_webhosting_ppa', 'Out Of Stock Plesk Automation Webhosting', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_WEBHOSTING_PPA'), ['0', '1'], ['No', 'Yes']);
 	}
 
