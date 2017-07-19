@@ -270,6 +270,8 @@ class Plugin {
 				//echo "Result:";var_dump($result);echo "\n";
 				try {
 					\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
+				} catch (PPAFailedRequestException $e) {
+					echo 'Caught exception: '.$e->getMessage()."\n";
 				} catch (Exception $e) {
 					echo 'Caught exception: '.$e->getMessage()."\n";
 				}
