@@ -73,7 +73,6 @@ function get_pleskautomation_info_from_domain($hostname) {
 	$username = $result['result']['auth_info']['login'];
 	$userId = $result['result']['user_id'];
 	myadmin_log('webhosting', 'info', "Plesk Lookup for {$hostname} returned array({$account_id}, {$member_id}, {$subscriptoinId}, {$webspaceId})", __LINE__, __FILE__);
-	$extra = [$account_id, $member_id, $subscriptoinId, $webspaceId];
-	return $extra;
+	return [$account_id, $member_id, $subscriptoinId, $webspaceId];
 }
 
