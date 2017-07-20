@@ -2,10 +2,10 @@
 include_once(__DIR__.'/../../../../include/functions.inc.php');
 $ppaConnector = get_webhosting_ppa_instance();
 $subscriptoinId = (int)$_SERVER['argv'][1];
-$request = array(
+$request = [
 	'subscription_id' => $subscriptoinId,
 	'get_resources' => TRUE,
-);
+];
 $result = $ppaConnector->getSubscription($request);
 echo preg_replace("/$\s*array\s+\(/msiU", "array(", var_export($result, TRUE));
 echo "\n";

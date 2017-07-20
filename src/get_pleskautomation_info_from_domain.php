@@ -22,7 +22,7 @@ function get_pleskautomation_info_from_domain($hostname) {
 	include_once(__DIR__.'/get_webhosting_ppa_instance.php');
 	$ppaConnector = get_webhosting_ppa_instance($serverData);
 	try {
-		$result = $ppaConnector->__call('pleskintegration.getWebspaceIDByPrimaryDomain', array('domain' => $hostname));
+		$result = $ppaConnector->__call('pleskintegration.getWebspaceIDByPrimaryDomain', ['domain' => $hostname]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
 		echo 'Caught exception: '.$e->getMessage() . "\n";
@@ -30,7 +30,7 @@ function get_pleskautomation_info_from_domain($hostname) {
 	}
 	$webspaceId = $result['result']['webspace_id'];
 	try {
-		$result = $ppaConnector->__call('pleskintegration.getWebspace', array('webspace_id' => $webspaceId));
+		$result = $ppaConnector->__call('pleskintegration.getWebspace', ['webspace_id' => $webspaceId]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
 		echo 'Caught exception: '.$e->getMessage() . "\n";
@@ -40,7 +40,7 @@ function get_pleskautomation_info_from_domain($hostname) {
 	$subscriptoinId = $result['result']['sub_id'];
 	$webspace_status = $result['result']['status'];
 	try {
-		$result = $ppaConnector->__call('getSubscription', array('subscription_id' => $subscriptoinId, 'get_resources' => true));
+		$result = $ppaConnector->__call('getSubscription', ['subscription_id' => $subscriptoinId, 'get_resources' => true]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
 		echo 'Caught exception: '.$e->getMessage() . "\n";
@@ -48,7 +48,7 @@ function get_pleskautomation_info_from_domain($hostname) {
 	}
 	$subscription_status = $result['result']['is_active'];
 	try {
-		$result = $ppaConnector->__call('getAccountInfo', array('account_id' => $account_id));
+		$result = $ppaConnector->__call('getAccountInfo', ['account_id' => $account_id]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
 		echo 'Caught exception: '.$e->getMessage() . "\n";
@@ -56,7 +56,7 @@ function get_pleskautomation_info_from_domain($hostname) {
 	}
 	$email = $result['result']['email'];
 	try {
-		$result = $ppaConnector->__call('getAccountMembers', array('account_id' => $account_id));
+		$result = $ppaConnector->__call('getAccountMembers', ['account_id' => $account_id]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
 		echo 'Caught exception: '.$e->getMessage() . "\n";
@@ -64,7 +64,7 @@ function get_pleskautomation_info_from_domain($hostname) {
 	}
 	$member_id = $result['result'][0];
 	try {
-		$result = $ppaConnector->__call('getMemberFullInfo', array('member_id' => $member_id));
+		$result = $ppaConnector->__call('getMemberFullInfo', ['member_id' => $member_id]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
 		echo 'Caught exception: '.$e->getMessage() . "\n";
@@ -73,7 +73,7 @@ function get_pleskautomation_info_from_domain($hostname) {
 	$username = $result['result']['auth_info']['login'];
 	$userId = $result['result']['user_id'];
 	myadmin_log('webhosting', 'info', "Plesk Lookup for {$hostname} returned array({$account_id}, {$member_id}, {$subscriptoinId}, {$webspaceId})", __LINE__, __FILE__);
-	$extra = array($account_id, $member_id, $subscriptoinId, $webspaceId);
+	$extra = [$account_id, $member_id, $subscriptoinId, $webspaceId];
 	return $extra;
 }
 

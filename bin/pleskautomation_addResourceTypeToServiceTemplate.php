@@ -8,11 +8,11 @@ $owner_id = 126;
 $name = 'My Service';
 $service_template = 100;
 $resource_type = 100;
-$request = array(
+$request = [
 	'owner_id' => $owner_id,
 	'st_id' => $service_template,
 	'rt_id' => $resource_type,
-);
+];
 // Make the pem.addAccount call.
 // The PPAConnector instance will form a proper XML-RPC request by itself.
 // Note that the method is called without the pem prefix as it will be added by the PPAConnector instance.

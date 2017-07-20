@@ -6,12 +6,11 @@ $password = _randomstring(10);
 $data = $GLOBALS['tf']->accounts->read(2773);
 $owner_id = 126;
 $name = 'My Service';
-$request = array(
+$request = [
 	'owner_id' => $owner_id,
 	'name' => $name,
-	'resources' => array(
-	),
-);
+	'resources' => [],
+];
 // Make the pem.addAccount call.
 // The PPAConnector instance will form a proper XML-RPC request by itself.
 // Note that the method is called without the pem prefix as it will be added by the PPAConnector instance.

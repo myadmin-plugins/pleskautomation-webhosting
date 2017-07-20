@@ -58,11 +58,11 @@ class PPAConnector {
 			// XML/RPC2
 			$url = "https://{$login}:{$password}@{$ipAddress}:8440/RPC2";
 			//echo "$url\n";exit;
-			$options = array(
+			$options = [
 				'prefix' => 'pem.',
 				'debug' => FALSE,
 				'sslverify' => FALSE,
-			);
+			];
 			$xmlrpcClient = \XML_RPC2_Client::create($url, $options);
 			self::$xmlrpcProxy = $xmlrpcClient;
 		}

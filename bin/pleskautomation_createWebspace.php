@@ -8,16 +8,16 @@ $accountId = 127;
 $serviceTemplateId = 24;
 $subscriptoinId = 214;
 $domain = 'pleskapitest.d.interserver.net';
-$request = array(
-	'new_webspace' => array(
+$request = [
+	'new_webspace' => [
 		'sub_id' => $subscriptoinId,
 		'domain' => $domain,
-		'resources' => array(
-			array('rt_id' => 1000084),
+		'resources' => [
+			['rt_id' => 1000084],
 			//array('rt_id' => 1000115),
-		),
-	),
-);
+		],
+	],
+];
 $result = $ppaConnector->{'pleskintegration.createWebspace'}($request);
 echo "Result:";
 var_dump($result);

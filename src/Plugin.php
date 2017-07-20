@@ -64,31 +64,31 @@ class Plugin {
 				$data['name'] = str_replace('@', ' ', $data['account_lid']);
 			}
 			list($first, $last) = explode(' ', $data['name']);
-			$requestPerson = array(
+			$requestPerson = [
 				'first_name' => $first,
 				'last_name' => $last,
 				'company_name' => (isset($data['company']) ? $data['company'] : ''),
-			);
-			$requestAddress = array(
+			];
+			$requestAddress = [
 				'street_name' => (isset($data['address']) ? $data['address'] : ''),
 				'address2' => (isset($data['address2']) ? $data['address2'] : ''),
 				'zipcode' => (isset($data['zip']) ? $data['zip'] : ''),
 				'city' => (isset($data['city']) ? $data['city'] : ''),
 				'country' => convert_country_iso2($data['country']),
 				'state' => (isset($data['state']) ? $data['state'] : ''),
-			);
-			$requestPhone = array(
+			];
+			$requestPhone = [
 				'country_code' => '1',
 				'area_code' => '',
 				'phone_num' => (isset($data['phone']) ? $data['phone'] : ''),
 				'ext_num' => '',
-			);
-			$request = array(
+			];
+			$request = [
 				'person' => $requestPerson,
 				'address' => $requestAddress,
 				'phone' => $requestPhone,
 				'email' => $data['account_lid'],
-			);
+			];
 			try {
 				$result = $ppaConnector->addAccount($request);
 				//echo "Result:";var_dump($result);echo "\n";
@@ -106,17 +106,17 @@ class Plugin {
 			$serExtra = $db->real_escape(myadmin_stringify($extra));
 			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$serExtra}' where {$settings['PREFIX']}_id='{$serviceClass->getId()}'", __LINE__, __FILE__);
 			myadmin_log(self::$module, 'info', "addAccount Got Account ID: {$accountId}", __LINE__, __FILE__);
-			$request = array(
+			$request = [
 				'account_id' => $accountId,
-				'auth' => array(
+				'auth' => [
 					'login' => $username,
 					'password' => $password
-				),
+				],
 				'person' => $requestPerson,
 				'address' => $requestAddress,
 				'phone' => $requestPhone,
 				'email' => $data['account_lid'],
-			);
+			];
 			try {
 				$result = $ppaConnector->addAccountMember($request);
 				//echo "Result:";var_dump($result);echo "\n";
@@ -132,10 +132,10 @@ class Plugin {
 			$serExtra = $db->real_escape(myadmin_stringify($extra));
 			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$serExtra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceClass->getId()}'", __LINE__, __FILE__);
 			myadmin_log(self::$module, 'info', "addAccountMember Got Account ID: {$userId}  Username: {$username}  Password: {$password}", __LINE__, __FILE__);
-			$request = array(
+			$request = [
 				'account_id' => $accountId,
 				'service_template_id' => $serviceTemplateId,
-			);
+			];
 			try {
 				$result = $ppaConnector->activateSubscription($request);
 				//echo "Result:";var_dump($result);echo "\n";
@@ -164,20 +164,20 @@ class Plugin {
 			  }
 			  print_r($result);
 			 */
-			$request = array(
-				'new_webspace' => array(
+			$request = [
+				'new_webspace' => [
 					'sub_id' => $subscriptoinId,
 					'domain' => $hostname,
-					'resources' => array(
-						array('rt_id' => 1000084), // plesk_integration Subscription
-						array('rt_id' => 1000115), // pleskwebiis_hosting IIS Webspace
-						array('rt_id' => 1000087), // plesk_db_hosting MySQL database
+					'resources' => [
+						['rt_id' => 1000084], // plesk_integration Subscription
+						['rt_id' => 1000115], // pleskwebiis_hosting IIS Webspace
+						['rt_id' => 1000087], // plesk_db_hosting MySQL database
 						//array('rt_id' => 1000091), // plesk_db_hosting Microsoft SQL database
-						array('rt_id' => 1000152), // plesk_db_hosting Microsoft SQL database
-						array('rt_id' => 1000132), // plesk__mail PostFix Mail
-					),
-				),
-			);
+						['rt_id' => 1000152], // plesk_db_hosting Microsoft SQL database
+						['rt_id' => 1000132], // plesk__mail PostFix Mail
+					],
+				],
+			];
 			try {
 				$result = $ppaConnector->{'pleskintegration.createWebspace'}($request);
 				//echo "Result:";var_dump($result);echo "\n";
@@ -287,9 +287,9 @@ class Plugin {
 				$subscriptoinId = $extra[2];
 			include_once(__DIR__.'/get_webhosting_ppa_instance.php');
 				$ppaConnector = get_webhosting_ppa_instance($serverdata);
-				$request = array(
+				$request = [
 					'subscription_id' => $subscriptoinId,
-				);
+				];
 				$result = $ppaConnector->disableSubscription($request);
 				//echo "Result:";var_dump($result);echo "\n";
 				try {
@@ -332,9 +332,9 @@ class Plugin {
 					myadmin_log(self::$module, 'info', 'PPAConnector::getInstance Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 					return FALSE;
 				}
-				$request = array(
+				$request = [
 					'subscription_id' => $subscriptoinId,
-				);
+				];
 				try {
 					$result = $ppaConnector->disableSubscription($request);
 				} catch (Exception $e) {

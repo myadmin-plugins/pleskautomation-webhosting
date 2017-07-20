@@ -2,9 +2,9 @@
 include_once(__DIR__.'/../../../../include/functions.inc.php');
 $ppaConnector = get_webhosting_ppa_instance();
 $webspaceId = (int)$_SERVER['argv'][1];
-$request = array(
+$request = [
 	'webspace_id' => $webspaceId,
-);
+];
 $result = $ppaConnector->__call('pleskintegration.getWebspace', $request);
 echo preg_replace("/$\s*array\s+\(/msiU", "array(", var_export($result, TRUE));
 echo "\n";

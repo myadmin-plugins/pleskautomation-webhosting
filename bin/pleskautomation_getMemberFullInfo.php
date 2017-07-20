@@ -2,9 +2,9 @@
 include_once(__DIR__.'/../../../../include/functions.inc.php');
 $ppaConnector = get_webhosting_ppa_instance();
 $member_id = (int)$_SERVER['argv'][1];
-$request = array(
+$request = [
 	'member_id' => $member_id,
-);
+];
 $result = $ppaConnector->getMemberFullInfo($request);
 echo preg_replace("/$\s*array\s+\(/msiU", "array(", var_export($result, TRUE));
 echo "\n";

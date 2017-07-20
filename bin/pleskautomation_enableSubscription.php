@@ -5,9 +5,9 @@ $ppaConnector = get_webhosting_ppa_instance();
 $password = _randomstring(10);
 $data = $GLOBALS['tf']->accounts->read(2773);
 list($first, $last) = explode(' ', $data['name']);
-$request = array(
+$request = [
 	'subscription_id' => $subscriptoinId,
-);
+];
 // Make the pem.addAccount call.
 // The PPAConnector instance will form a proper XML-RPC request by itself.
 // Note that the method is called without the pem prefix as it will be added by the PPAConnector instance.

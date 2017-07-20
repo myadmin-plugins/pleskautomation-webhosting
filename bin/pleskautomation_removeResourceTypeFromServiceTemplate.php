@@ -4,10 +4,10 @@ $ppaConnector = get_webhosting_ppa_instance();
 // let us form an array with account data
 $service_id = 126;
 $resource_id = 100;
-$request = array(
+$request = [
 	'st_id' => $service_id,
 	'rt_id' => $resource_id,
-);
+];
 $result = $ppaConnector->removeResourceTypeFromServiceTemplate($request);
 echo "Result:";
 var_dump($result);
