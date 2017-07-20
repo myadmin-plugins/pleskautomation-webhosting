@@ -57,7 +57,7 @@ class Plugin {
 				$hostname = $serviceClass->getId().'.server.com';
 			$password = website_get_password($serviceClass->getId());
 			$username = get_new_webhosting_username($serviceClass->getId(), $hostname, $serviceClass->getServer());
-			include_once(__DIR__.'/get_webhosting_ppa_instance.php');
+			include_once __DIR__.'/get_webhosting_ppa_instance.php';
 			$ppaConnector = get_webhosting_ppa_instance($serverdata);
 			$serviceTemplateId = 46;
 			if (!isset($data['name']) || trim($data['name']) == '') {
@@ -67,20 +67,20 @@ class Plugin {
 			$requestPerson = [
 				'first_name' => $first,
 				'last_name' => $last,
-				'company_name' => (isset($data['company']) ? $data['company'] : '')
+				'company_name' => isset($data['company']) ? $data['company'] : ''
 			];
 			$requestAddress = [
-				'street_name' => (isset($data['address']) ? $data['address'] : ''),
-				'address2' => (isset($data['address2']) ? $data['address2'] : ''),
-				'zipcode' => (isset($data['zip']) ? $data['zip'] : ''),
-				'city' => (isset($data['city']) ? $data['city'] : ''),
+				'street_name' => isset($data['address']) ? $data['address'] : '',
+				'address2' => isset($data['address2']) ? $data['address2'] : '',
+				'zipcode' => isset($data['zip']) ? $data['zip'] : '',
+				'city' => isset($data['city']) ? $data['city'] : '',
 				'country' => convert_country_iso2($data['country']),
-				'state' => (isset($data['state']) ? $data['state'] : '')
+				'state' => isset($data['state']) ? $data['state'] : ''
 			];
 			$requestPhone = [
 				'country_code' => '1',
 				'area_code' => '',
-				'phone_num' => (isset($data['phone']) ? $data['phone'] : ''),
+				'phone_num' => isset($data['phone']) ? $data['phone'] : '',
 				'ext_num' => ''
 			];
 			$request = [
@@ -241,7 +241,7 @@ class Plugin {
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
 			if (count($extra) == 0) {
 				function_requirements('get_pleskautomation_info_from_domain');
-				include_once(__DIR__.'/get_pleskautomation_info_from_domain.php');
+				include_once __DIR__.'/get_pleskautomation_info_from_domain.php';
 				$extra = \get_pleskautomation_info_from_domain($serviceClass->getHostname());
 			}
 			if (count($extra) == 0) {
@@ -253,7 +253,7 @@ class Plugin {
 				//list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
 				$subscriptoinId = $extra[2];
 				function_requirements('get_webhosting_ppa_instance');
-			include_once(__DIR__.'/get_webhosting_ppa_instance.php');
+			include_once __DIR__.'/get_webhosting_ppa_instance.php';
 				$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				$request = ['subscription_id' => $subscriptoinId];
 				$result = $ppaConnector->enableSubscription($request);
@@ -285,7 +285,7 @@ class Plugin {
 			} else {
 				//list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
 				$subscriptoinId = $extra[2];
-			include_once(__DIR__.'/get_webhosting_ppa_instance.php');
+			include_once __DIR__.'/get_webhosting_ppa_instance.php';
 				$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				$request = [
 					'subscription_id' => $subscriptoinId
@@ -326,7 +326,7 @@ class Plugin {
 				//list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
 				$subscriptoinId = $extra[2];
 				try {
-			include_once(__DIR__.'/get_webhosting_ppa_instance.php');
+			include_once __DIR__.'/get_webhosting_ppa_instance.php';
 					$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				} catch (Exception $e) {
 					myadmin_log(self::$module, 'info', 'PPAConnector::getInstance Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
