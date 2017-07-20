@@ -8,7 +8,7 @@
  * and user_id thats everything needed then
  *
  * @param string $hostname the website/domain name to lookup
- * @return array an array respectively containing $account_id, $member_id, $subscriptoinId, and $webspaceId
+ * @return array|bool
  * @throws \Detain\MyAdminPleskAutomation\Detain\MyAdminPleskAutomation\PPAFailedRequestException
  * @throws \Detain\MyAdminPleskAutomation\Detain\MyAdminPleskAutomation\PPAMalformedRequestException
  */
