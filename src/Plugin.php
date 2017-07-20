@@ -5,6 +5,11 @@ namespace Detain\MyAdminPleskAutomation;
 use Detain\MyAdminPleskAutomation\PPAConnector;
 use Symfony\Component\EventDispatcher\GenericEvent;
 
+/**
+ * Class Plugin
+ *
+ * @package Detain\MyAdminPleskAutomation
+ */
 class Plugin {
 
 	public static $name = 'PleskAutomation Webhosting';
@@ -13,10 +18,15 @@ class Plugin {
 	public static $module = 'webhosting';
 	public static $type = 'service';
 
-
+	/**
+	 * Plugin constructor.
+	 */
 	public function __construct() {
 	}
 
+	/**
+	 * @return array
+	 */
 	public static function getHooks() {
 		return [
 			self::$module.'.settings' => [__CLASS__, 'getSettings'],
@@ -28,6 +38,11 @@ class Plugin {
 		];
 	}
 
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 * @throws \Detain\MyAdminPleskAutomation\PPAFailedRequestException
+	 * @throws \Detain\MyAdminPleskAutomation\PPAMalformedRequestException
+	 */
 	public static function getActivate(GenericEvent $event) {
 		if ($event['category'] == get_service_define('WEB_PPA')) {
 			myadmin_log(self::$module, 'info', 'PleskAutomation Activation', __LINE__, __FILE__);
@@ -214,6 +229,11 @@ class Plugin {
 		}
 	}
 
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 * @throws \Detain\MyAdminPleskAutomation\Detain\MyAdminPleskAutomation\PPAFailedRequestException
+	 * @throws \Detain\MyAdminPleskAutomation\Detain\MyAdminPleskAutomation\PPAMalformedRequestException
+	 */
 	public static function getReactivate(GenericEvent $event) {
 		if ($event['category'] == get_service_define('WEB_PPA')) {
 			$serviceClass = $event->getSubject();
@@ -248,6 +268,10 @@ class Plugin {
 		}
 	}
 
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 * @throws \Detain\MyAdminPleskAutomation\PPAMalformedRequestException
+	 */
 	public static function getDeactivate(GenericEvent $event) {
 		if ($event['category'] == get_service_define('WEB_PPA')) {
 			myadmin_log(self::$module, 'info', 'PleskAutomation Deactivation', __LINE__, __FILE__);
@@ -281,6 +305,12 @@ class Plugin {
 		}
 	}
 
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 * @return bool
+	 * @throws \Detain\MyAdminPleskAutomation\PPAFailedRequestException
+	 * @throws \Detain\MyAdminPleskAutomation\PPAMalformedRequestException
+	 */
 	public static function getTerminate(GenericEvent $event) {
 		if ($event['category'] == get_service_define('WEB_PPA')) {
 			myadmin_log(self::$module, 'info', 'PleskAutomation Termination', __LINE__, __FILE__);
@@ -349,6 +379,9 @@ class Plugin {
 		}
 	}
 
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 */
 	public static function getChangeIp(GenericEvent $event) {
 		if ($event['category'] == get_service_define('WEB_PPA')) {
 			$serviceClass = $event->getSubject();
@@ -370,6 +403,9 @@ class Plugin {
 		}
 	}
 
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 */
 	public static function getMenu(GenericEvent $event) {
 		$menu = $event->getSubject();
 		if ($GLOBALS['tf']->ima == 'admin') {
@@ -379,12 +415,18 @@ class Plugin {
 		}
 	}
 
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 */
 	public static function getRequirements(GenericEvent $event) {
 		$loader = $event->getSubject();
 		$loader->add_requirement('get_pleskautomation_info_from_domain', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/get_pleskautomation_info_from_domain.php');
 		$loader->add_requirement('get_webhosting_ppa_instance', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/get_webhosting_ppa_instance.php');
 	}
 
+	/**
+	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
+	 */
 	public static function getSettings(GenericEvent $event) {
 		$settings = $event->getSubject();
 		$settings->add_select_master(self::$module, 'Default Servers', self::$module, 'new_website_ppa_server', 'Default Plesk Automation Setup Server', NEW_WEBSITE_PPA_SERVER, get_service_define('WEB_PPA'));

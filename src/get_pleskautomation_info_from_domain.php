@@ -1,8 +1,6 @@
 <?php
-
 /**
  * maps a domain name to plesk info
- *
  * ok finally got basic logic figured out that will let me lookup a webspace by domain name (plesk function not ppa, but can still be used nearly the same)
  * from there it gets the webspace id, then w/ that it loads the webspace.  w/ that result it parse the account id, subscription id, and webspace status
  * then it loads the subscription data parsing the subscription status from response, account info data parsing the email from the response
@@ -11,6 +9,8 @@
  *
  * @param string $hostname the website/domain name to lookup
  * @return array an array respectively containing $account_id, $member_id, $subscriptoinId, and $webspaceId
+ * @throws \Detain\MyAdminPleskAutomation\Detain\MyAdminPleskAutomation\PPAFailedRequestException
+ * @throws \Detain\MyAdminPleskAutomation\Detain\MyAdminPleskAutomation\PPAMalformedRequestException
  */
 function get_pleskautomation_info_from_domain($hostname) {
 	$module = 'webhosting';

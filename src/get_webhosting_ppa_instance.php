@@ -1,9 +1,8 @@
 <?php
-
 /**
  * Gets a Plesk Automation Class instance for the given server.
  *
- * @param array|int|false $server the server to get a Plesk Automation instance for, can be an array like from get_service or a server id, or false for default
+ * @param array|bool|false|int $server the server to get a Plesk Automation instance for, can be an array like from get_service or a server id, or false for default
  * @return \Detain\MyAdminPleskAutomation\PPAConnector the pleskautomation instance
  */
 function get_webhosting_ppa_instance($server = false) {

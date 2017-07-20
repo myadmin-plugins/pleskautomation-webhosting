@@ -14,6 +14,9 @@ require_once('XML/RPC2/Client.php');
 class PPAConnector {
 	static protected $xmlrpcProxy;
 
+	/**
+	 * PPAConnector constructor.
+	 */
 	protected function __construct() {
 		/* this stuff was up top */
 		if (!isset($GLOBALS['HTTP_RAW_POST_DATA']))
@@ -71,8 +74,8 @@ class PPAConnector {
 	 *
 	 * @param $response
 	 * @return bool
-	 * @throws Detain\MyAdminPleskAutomation\PPAFailedRequestException
-	 * @throws Detain\MyAdminPleskAutomation\PPAMalformedRequestException
+	 * @throws \Detain\MyAdminPleskAutomation\PPAFailedRequestException
+	 * @throws \Detain\MyAdminPleskAutomation\PPAMalformedRequestException
 	 */
 	public static function checkResponse($response) {
 		if (isset($response['status'])) {
