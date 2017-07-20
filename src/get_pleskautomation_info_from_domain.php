@@ -62,9 +62,9 @@ function get_pleskautomation_info_from_domain($hostname) {
 		echo 'Caught exception: '.$e->getMessage() . "\n";
 		return false;
 	}
-	$member_id = $result['result'][0];
+	$memberId = $result['result'][0];
 	try {
-		$result = $ppaConnector->__call('getMemberFullInfo', ['member_id' => $member_id]);
+		$result = $ppaConnector->__call('getMemberFullInfo', ['member_id' => $memberId]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
 		echo 'Caught exception: '.$e->getMessage() . "\n";
@@ -72,7 +72,7 @@ function get_pleskautomation_info_from_domain($hostname) {
 	}
 	$username = $result['result']['auth_info']['login'];
 	$userId = $result['result']['user_id'];
-	myadmin_log('webhosting', 'info', "Plesk Lookup for {$hostname} returned array({$account_id}, {$member_id}, {$subscriptoinId}, {$webspaceId})", __LINE__, __FILE__);
-	return [$account_id, $member_id, $subscriptoinId, $webspaceId];
+	myadmin_log('webhosting', 'info', "Plesk Lookup for {$hostname} returned array({$account_id}, {$memberId}, {$subscriptoinId}, {$webspaceId})", __LINE__, __FILE__);
+	return [$account_id, $memberId, $subscriptoinId, $webspaceId];
 }
 
