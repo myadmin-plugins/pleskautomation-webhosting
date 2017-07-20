@@ -12,7 +12,7 @@ $request = [
 // The PPAConnector instance will form a proper XML-RPC request by itself.
 // Note that the method is called without the pem prefix as it will be added by the PPAConnector instance.
 $result = $ppaConnector->enableSubscription($request);
-echo "Result:";
+echo 'Result:';
 var_dump($result);
 echo "\n";
 // Parse the response

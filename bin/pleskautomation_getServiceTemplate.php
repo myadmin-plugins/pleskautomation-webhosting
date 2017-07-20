@@ -9,7 +9,7 @@ $request = [
 	'get_full_info' => FALSE,
 ];
 $result = $ppaConnector->getServiceTemplate($request);
-echo "Result:";
+echo 'Result:';
 var_dump($result);
 echo "\n";
 // Parse the response

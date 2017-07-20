@@ -19,7 +19,7 @@ $request = [
 	],
 ];
 $result = $ppaConnector->{'pleskintegration.createWebspace'}($request);
-echo "Result:";
+echo 'Result:';
 var_dump($result);
 echo "\n";
 try {

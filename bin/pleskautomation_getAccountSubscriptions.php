@@ -6,7 +6,7 @@ $request = [
 	'account_id' => $accountId,
 ];
 $result = $ppaConnector->getAccountSubscriptions($request);
-echo preg_replace("/$\s*array\s+\(/msiU", "array(", var_export($result, TRUE));
+echo preg_replace("/$\s*array\s+\(/msiU", 'array(', var_export($result, TRUE));
 echo "\n";
 try {
 	PPAConnector::checkResponse($result);

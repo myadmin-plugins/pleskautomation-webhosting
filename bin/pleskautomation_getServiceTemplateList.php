@@ -8,7 +8,7 @@ $request = [
 	'active' => TRUE,
 ];
 $result = $ppaConnector->getServiceTemplateList($request);
-echo "Result:";
+echo 'Result:';
 var_dump($result);
 echo "\n";
 // Parse the response

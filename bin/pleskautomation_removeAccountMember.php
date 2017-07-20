@@ -7,7 +7,7 @@ $request = [
 	'user_id' => $userId,
 ];
 $result = $ppaConnector->removeAccountMember($request);
-echo "Result:";
+echo 'Result:';
 var_dump($result);
 echo "\n";
 // Parse the response

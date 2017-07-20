@@ -14,7 +14,7 @@ $options = [
 ];
 			$xmlrpcClient = XML_RPC2_Client::create($url, $options);
 $result = $xmlrpcClient->listMethods();
-echo "Result:";
+echo 'Result:';
 print_r($result);
 echo "\n";
 exit;

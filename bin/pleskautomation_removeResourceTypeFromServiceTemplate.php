@@ -9,7 +9,7 @@ $request = [
 	'rt_id' => $resource_id,
 ];
 $result = $ppaConnector->removeResourceTypeFromServiceTemplate($request);
-echo "Result:";
+echo 'Result:';
 var_dump($result);
 echo "\n";
 // Parse the response
