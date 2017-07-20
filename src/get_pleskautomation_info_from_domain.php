@@ -38,7 +38,6 @@ function get_pleskautomation_info_from_domain($hostname) {
 	}
 	$accountId = $result['result']['owner_id'];
 	$subscriptoinId = $result['result']['sub_id'];
-	$webspace_status = $result['result']['status'];
 	try {
 		$result = $ppaConnector->__call('getSubscription', ['subscription_id' => $subscriptoinId, 'get_resources' => true]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
@@ -46,7 +45,6 @@ function get_pleskautomation_info_from_domain($hostname) {
 		echo 'Caught exception: '.$e->getMessage() . "\n";
 		return false;
 	}
-	$subscription_status = $result['result']['is_active'];
 	try {
 		$result = $ppaConnector->__call('getAccountInfo', ['account_id' => $accountId]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
@@ -54,7 +52,6 @@ function get_pleskautomation_info_from_domain($hostname) {
 		echo 'Caught exception: '.$e->getMessage() . "\n";
 		return false;
 	}
-	$email = $result['result']['email'];
 	try {
 		$result = $ppaConnector->__call('getAccountMembers', ['account_id' => $accountId]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
@@ -70,8 +67,6 @@ function get_pleskautomation_info_from_domain($hostname) {
 		echo 'Caught exception: '.$e->getMessage() . "\n";
 		return false;
 	}
-	$username = $result['result']['auth_info']['login'];
-	$userId = $result['result']['user_id'];
 	myadmin_log('webhosting', 'info', "Plesk Lookup for {$hostname} returned array({$accountId}, {$memberId}, {$subscriptoinId}, {$webspaceId})", __LINE__, __FILE__);
 	return [$accountId, $memberId, $subscriptoinId, $webspaceId];
 }
