@@ -6,7 +6,7 @@ $st_id = (isset($_SERVER['argv'][1]) ? (int) $_SERVER['argv'][1] : 12);
 $request = [
 	'st_id' => $st_id,
 	'get_resources' => TRUE,
-	'get_full_info' => FALSE,
+	'get_full_info' => FALSE
 ];
 $result = $ppaConnector->getServiceTemplate($request);
 echo 'Result:';

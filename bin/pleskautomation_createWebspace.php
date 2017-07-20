@@ -15,8 +15,8 @@ $request = [
 		'resources' => [
 			['rt_id' => 1000084],
 			//array('rt_id' => 1000115),
-		],
-	],
+		]
+	]
 ];
 $result = $ppaConnector->{'pleskintegration.createWebspace'}($request);
 echo 'Result:';

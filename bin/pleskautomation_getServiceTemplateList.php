@@ -5,7 +5,7 @@ $ppaConnector = get_webhosting_ppa_instance();
 $owner_id = 0;
 $request = [
 	'owner_id' => $owner_id,
-	'active' => TRUE,
+	'active' => TRUE
 ];
 $result = $ppaConnector->getServiceTemplateList($request);
 echo 'Result:';

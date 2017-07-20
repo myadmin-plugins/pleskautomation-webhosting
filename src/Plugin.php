@@ -34,7 +34,7 @@ class Plugin {
 			self::$module.'.reactivate' => [__CLASS__, 'getReactivate'],
 			self::$module.'.deactivate' => [__CLASS__, 'getDeactivate'],
 			self::$module.'.terminate' => [__CLASS__, 'getTerminate'],
-			'function.requirements' => [__CLASS__, 'getRequirements'],
+			'function.requirements' => [__CLASS__, 'getRequirements']
 		];
 	}
 
@@ -67,7 +67,7 @@ class Plugin {
 			$requestPerson = [
 				'first_name' => $first,
 				'last_name' => $last,
-				'company_name' => (isset($data['company']) ? $data['company'] : ''),
+				'company_name' => (isset($data['company']) ? $data['company'] : '')
 			];
 			$requestAddress = [
 				'street_name' => (isset($data['address']) ? $data['address'] : ''),
@@ -75,19 +75,19 @@ class Plugin {
 				'zipcode' => (isset($data['zip']) ? $data['zip'] : ''),
 				'city' => (isset($data['city']) ? $data['city'] : ''),
 				'country' => convert_country_iso2($data['country']),
-				'state' => (isset($data['state']) ? $data['state'] : ''),
+				'state' => (isset($data['state']) ? $data['state'] : '')
 			];
 			$requestPhone = [
 				'country_code' => '1',
 				'area_code' => '',
 				'phone_num' => (isset($data['phone']) ? $data['phone'] : ''),
-				'ext_num' => '',
+				'ext_num' => ''
 			];
 			$request = [
 				'person' => $requestPerson,
 				'address' => $requestAddress,
 				'phone' => $requestPhone,
-				'email' => $data['account_lid'],
+				'email' => $data['account_lid']
 			];
 			try {
 				$result = $ppaConnector->addAccount($request);
@@ -115,7 +115,7 @@ class Plugin {
 				'person' => $requestPerson,
 				'address' => $requestAddress,
 				'phone' => $requestPhone,
-				'email' => $data['account_lid'],
+				'email' => $data['account_lid']
 			];
 			try {
 				$result = $ppaConnector->addAccountMember($request);
@@ -134,7 +134,7 @@ class Plugin {
 			myadmin_log(self::$module, 'info', "addAccountMember Got Account ID: {$userId}  Username: {$username}  Password: {$password}", __LINE__, __FILE__);
 			$request = [
 				'account_id' => $accountId,
-				'service_template_id' => $serviceTemplateId,
+				'service_template_id' => $serviceTemplateId
 			];
 			try {
 				$result = $ppaConnector->activateSubscription($request);
@@ -175,8 +175,8 @@ class Plugin {
 						//array('rt_id' => 1000091), // plesk_db_hosting Microsoft SQL database
 						['rt_id' => 1000152], // plesk_db_hosting Microsoft SQL database
 						['rt_id' => 1000132], // plesk__mail PostFix Mail
-					],
-				],
+					]
+				]
 			];
 			try {
 				$result = $ppaConnector->{'pleskintegration.createWebspace'}($request);
@@ -288,7 +288,7 @@ class Plugin {
 			include_once(__DIR__.'/get_webhosting_ppa_instance.php');
 				$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				$request = [
-					'subscription_id' => $subscriptoinId,
+					'subscription_id' => $subscriptoinId
 				];
 				$result = $ppaConnector->disableSubscription($request);
 				//echo "Result:";var_dump($result);echo "\n";
@@ -333,7 +333,7 @@ class Plugin {
 					return FALSE;
 				}
 				$request = [
-					'subscription_id' => $subscriptoinId,
+					'subscription_id' => $subscriptoinId
 				];
 				try {
 					$result = $ppaConnector->disableSubscription($request);

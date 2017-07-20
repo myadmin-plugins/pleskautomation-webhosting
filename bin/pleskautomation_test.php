@@ -10,7 +10,7 @@ $url = "https://{$plesk_user}:{$plesk_pass}@{$ip}:8440/RPC2";
 $options = [
 				'prefix' => 'system.',
 				'debug' => FALSE,
-				'sslverify' => FALSE,
+				'sslverify' => FALSE
 ];
 			$xmlrpcClient = XML_RPC2_Client::create($url, $options);
 $result = $xmlrpcClient->listMethods();

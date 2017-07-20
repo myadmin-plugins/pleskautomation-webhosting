@@ -4,7 +4,7 @@ $ppaConnector = get_webhosting_ppa_instance();
 // let us form an array with account data
 $userId = 390;
 $request = [
-	'user_id' => $userId,
+	'user_id' => $userId
 ];
 $result = $ppaConnector->removeAccountMember($request);
 echo 'Result:';

@@ -6,7 +6,7 @@ $service_id = 126;
 $resource_id = 100;
 $request = [
 	'st_id' => $service_id,
-	'rt_id' => $resource_id,
+	'rt_id' => $resource_id
 ];
 $result = $ppaConnector->removeResourceTypeFromServiceTemplate($request);
 echo 'Result:';

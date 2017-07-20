@@ -9,7 +9,7 @@ $accountId = 127;
 $serviceTemplateId = 24;
 $request = [
 	'account_id' => $accountId,
-	'service_template_id' => $serviceTemplateId,
+	'service_template_id' => $serviceTemplateId
 ];
 // Make the pem.addAccount call.
 // The PPAConnector instance will form a proper XML-RPC request by itself.

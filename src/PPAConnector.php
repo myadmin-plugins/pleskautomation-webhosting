@@ -61,7 +61,7 @@ class PPAConnector {
 			$options = [
 				'prefix' => 'pem.',
 				'debug' => FALSE,
-				'sslverify' => FALSE,
+				'sslverify' => FALSE
 			];
 			$xmlrpcClient = \XML_RPC2_Client::create($url, $options);
 			self::$xmlrpcProxy = $xmlrpcClient;

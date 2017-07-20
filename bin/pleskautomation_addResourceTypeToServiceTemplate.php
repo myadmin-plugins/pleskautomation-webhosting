@@ -11,7 +11,7 @@ $resource_type = 100;
 $request = [
 	'owner_id' => $owner_id,
 	'st_id' => $service_template,
-	'rt_id' => $resource_type,
+	'rt_id' => $resource_type
 ];
 // Make the pem.addAccount call.
 // The PPAConnector instance will form a proper XML-RPC request by itself.

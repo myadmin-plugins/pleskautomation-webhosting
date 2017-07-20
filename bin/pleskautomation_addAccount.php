@@ -8,7 +8,7 @@ $request = [
 	'person' => [
 		'first_name' => $first,
 		'last_name' => $last,
-		'company_name' => $data['company'],
+		'company_name' => $data['company']
 	],
 	'address' => [
 		'street_name' => $data['address'],
@@ -16,15 +16,15 @@ $request = [
 		'zipcode' => $data['zip'],
 		'city' => $data['city'],
 		'country' => $data['country'],
-		'state' => $data['state'],
+		'state' => $data['state']
 	],
 	'phone' => [
 		'country_code' => '1',
 		'area_code' => '',
 		'phone_num' => $data['phone'],
-		'ext_num' => '',
+		'ext_num' => ''
 	],
-	'email' => $data['account_lid'],
+	'email' => $data['account_lid']
 ];
 // Make the pem.addAccount call.
 // The PPAConnector instance will form a proper XML-RPC request by itself.
