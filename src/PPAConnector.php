@@ -31,7 +31,7 @@ class PPAConnector {
 	 * @param $password
 	 * @return mixed
 	 */
-	static public function getInstance($ipAddress, $login, $password) {
+	public static function getInstance($ipAddress, $login, $password) {
 		$password = str_replace('?', '%3F', $password);
 		if (!self::$xmlrpcProxy) {
 			// Here go communication parameters for our management node

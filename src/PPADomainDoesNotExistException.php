@@ -2,7 +2,7 @@
 
 namespace Detain\MyAdminPleskAutomation;
 
-use Detain\MyAdminPleskAutomation\PPAFailedRequestException as PPAFailedRequestException;
+use Detain\MyAdminPleskAutomation\PPAFailedRequestException;
 
 /**
  * {@inheritDoc}
