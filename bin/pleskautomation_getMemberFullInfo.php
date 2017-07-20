@@ -1,7 +1,7 @@
 <?php
 include_once(__DIR__.'/../../../../include/functions.inc.php');
 $ppaConnector = get_webhosting_ppa_instance();
-$member_id = intval($_SERVER['argv'][1]);
+$member_id = (int)$_SERVER['argv'][1];
 $request = array(
 	'member_id' => $member_id,
 );
