@@ -18,6 +18,6 @@ function get_webhosting_ppa_instance($server = false) {
 	}
 	$hash = $serverData[$settings['PREFIX'].'_key'];
 	$ip = $serverData[$settings['PREFIX'].'_ip'];
-	list($plesk_user, $plesk_pass) = explode(':', html_entity_decode($hash));
-	return \Detain\MyAdminPleskAutomation\PPAConnector::getInstance($ip, $plesk_user, $plesk_pass);
+	list($pleskUser, $pleskPass) = explode(':', html_entity_decode($hash));
+	return \Detain\MyAdminPleskAutomation\PPAConnector::getInstance($ip, $pleskUser, $pleskPass);
 }
