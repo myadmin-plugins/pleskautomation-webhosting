@@ -1,7 +1,7 @@
 <?php
 include_once __DIR__.'/../../../../include/functions.inc.php';
 $ppaConnector = get_webhosting_ppa_instance();
-$subscriptoinId = (int)$_SERVER['argv'][1];
+$subscriptoinId = (int) $_SERVER['argv'][1];
 $request = [
 	'subscription_id' => $subscriptoinId,
 	'get_resources' => TRUE

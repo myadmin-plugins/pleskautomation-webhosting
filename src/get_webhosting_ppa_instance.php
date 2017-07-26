@@ -5,13 +5,13 @@
  * @param array|bool|false|int $server the server to get a Plesk Automation instance for, can be an array like from get_service or a server id, or false for default
  * @return \Detain\MyAdminPleskAutomation\PPAConnector the pleskautomation instance
  */
-function get_webhosting_ppa_instance($server = false) {
+function get_webhosting_ppa_instance($server = FALSE) {
 	$module = 'webhosting';
 	$settings = get_module_settings($module);
 	if (is_array($server)) {
 		$serverData = $server;
 	} else {
-		if ($server === false)
+		if ($server === FALSE)
 			$server = NEW_WEBSITE_PPA_SERVER;
 		$serverData = get_service_master($server, $module);
 	}

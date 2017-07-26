@@ -26,7 +26,7 @@ function get_pleskautomation_info_from_domain($hostname) {
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
 		echo 'Caught exception: '.$e->getMessage() . "\n";
-		return false;
+		return FALSE;
 	}
 	$webspaceId = $result['result']['webspace_id'];
 	try {
@@ -34,30 +34,30 @@ function get_pleskautomation_info_from_domain($hostname) {
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
 		echo 'Caught exception: '.$e->getMessage() . "\n";
-		return false;
+		return FALSE;
 	}
 	$accountId = $result['result']['owner_id'];
 	$subscriptoinId = $result['result']['sub_id'];
 	try {
-		$result = $ppaConnector->__call('getSubscription', ['subscription_id' => $subscriptoinId, 'get_resources' => true]);
+		$result = $ppaConnector->__call('getSubscription', ['subscription_id' => $subscriptoinId, 'get_resources' => TRUE]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
 		echo 'Caught exception: '.$e->getMessage() . "\n";
-		return false;
+		return FALSE;
 	}
 	try {
 		$result = $ppaConnector->__call('getAccountInfo', ['account_id' => $accountId]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
 		echo 'Caught exception: '.$e->getMessage() . "\n";
-		return false;
+		return FALSE;
 	}
 	try {
 		$result = $ppaConnector->__call('getAccountMembers', ['account_id' => $accountId]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
 		echo 'Caught exception: '.$e->getMessage() . "\n";
-		return false;
+		return FALSE;
 	}
 	$memberId = $result['result'][0];
 	try {
@@ -65,7 +65,7 @@ function get_pleskautomation_info_from_domain($hostname) {
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
 		echo 'Caught exception: '.$e->getMessage() . "\n";
-		return false;
+		return FALSE;
 	}
 	myadmin_log('webhosting', 'info', "Plesk Lookup for {$hostname} returned array({$accountId}, {$memberId}, {$subscriptoinId}, {$webspaceId})", __LINE__, __FILE__);
 	return [$accountId, $memberId, $subscriptoinId, $webspaceId];
