@@ -5,8 +5,7 @@ namespace Detain\MyAdminPleskAutomation;
 use Detain\MyAdminPleskAutomation\PPAFailedRequestException;
 use Detain\MyAdminPleskAutomation\PPAMalformedRequestException;
 use Detain\MyAdminPleskAutomation\PPADomainDoesNotExistException;
-
-require_once 'XML/RPC2/Client.php';
+use XML_RPC2_Client;
 
 /**
  * Parallels Plesk Automation connector class provicding xml/rpc2 access to the service
