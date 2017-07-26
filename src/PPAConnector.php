@@ -16,7 +16,7 @@ class PPAConnector {
 	/**
 	 * PPAConnector constructor.
 	 */
-	protected function __construct() {
+	public function __construct() {
 		/* this stuff was up top */
 		if (!isset($GLOBALS['HTTP_RAW_POST_DATA']))
 			$GLOBALS['HTTP_RAW_POST_DATA'] = file_get_contents('php://input');
