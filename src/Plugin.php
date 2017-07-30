@@ -409,8 +409,8 @@ class Plugin {
 	public static function getMenu(GenericEvent $event) {
 		$menu = $event->getSubject();
 		if ($GLOBALS['tf']->ima == 'admin') {
-			$menu->add_link(self::$module, 'choice=none.reusable_pleskautomation', 'icons/database_warning_48.png', 'ReUsable PleskAutomation Licenses');
-			$menu->add_link(self::$module, 'choice=none.pleskautomation_list', 'icons/database_warning_48.png', 'PleskAutomation Licenses Breakdown');
+			$menu->add_link(self::$module, 'choice=none.reusable_pleskautomation', 'images/icons/database_warning_48.png', 'ReUsable PleskAutomation Licenses');
+			$menu->add_link(self::$module, 'choice=none.pleskautomation_list', 'images/icons/database_warning_48.png', 'PleskAutomation Licenses Breakdown');
 			$menu->add_link(self::$module.'api', 'choice=none.pleskautomation_licenses_list', 'whm/createacct.gif', 'List all PleskAutomation Licenses');
 		}
 	}
