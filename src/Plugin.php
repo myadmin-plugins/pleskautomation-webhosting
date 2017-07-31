@@ -313,6 +313,7 @@ class Plugin {
 	 */
 	public static function getTerminate(GenericEvent $event) {
 		if ($event['category'] == get_service_define('WEB_PPA')) {
+			$event->stopPropagation();
 			myadmin_log(self::$module, 'info', 'PleskAutomation Termination', __LINE__, __FILE__);
 			$serviceClass = $event->getSubject();
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
@@ -375,7 +376,6 @@ class Plugin {
 				myadmin_log(self::$module, 'info', 'disableSubscription Called got '.json_encode($result), __LINE__, __FILE__);
 				return TRUE;
 			}
-			$event->stopPropagation();
 		}
 	}
 
