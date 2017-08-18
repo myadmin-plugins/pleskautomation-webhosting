@@ -14,7 +14,7 @@
  */
 function get_pleskautomation_info_from_domain($hostname) {
 	$module = 'webhosting';
-	$settings = get_module_settings($module);
+	$settings = \get_module_settings($module);
 	$db = get_module_db($module);
 	$db->query("select * from {$settings['PREFIX']}_masters where {$settings['PREFIX']}_type=".get_service_define('WEB_PPA')."  order by {$settings['PREFIX']}_available desc limit 1", __LINE__, __FILE__);
 	$db->next_record(MYSQL_ASSOC);
