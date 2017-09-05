@@ -62,9 +62,8 @@ class Plugin {
 			include_once __DIR__.'/get_webhosting_ppa_instance.php';
 			$ppaConnector = get_webhosting_ppa_instance($serverdata);
 			$serviceTemplateId = 46;
-			if (!isset($data['name']) || trim($data['name']) == '') {
+			if (!isset($data['name']) || trim($data['name']) == '')
 				$data['name'] = str_replace('@', ' ', $data['account_lid']);
-			}
 			list($first, $last) = explode(' ', $data['name']);
 			$requestPerson = [
 				'first_name' => $first,
