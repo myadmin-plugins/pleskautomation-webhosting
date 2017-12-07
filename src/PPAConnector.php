@@ -1,5 +1,6 @@
 <?php
 
+
 namespace Detain\MyAdminPleskAutomation;
 
 use Detain\MyAdminPleskAutomation\PPAFailedRequestException;
@@ -18,8 +19,6 @@ class PPAConnector {
 	 */
 	public function __construct() {
 		/* this stuff was up top */
-		if (!isset($GLOBALS['HTTP_RAW_POST_DATA']))
-			$GLOBALS['HTTP_RAW_POST_DATA'] = file_get_contents('php://input');
 		//require_once('Zend/XmlRpc/Client.php');			// http://framework.zend.com/manual/1.12/en/zend.xmlrpc.client.html
 		//require('XML_RPC.php');							// http://gggeek.github.io/phpxmlrpc/
 	}
@@ -52,8 +51,6 @@ class PPAConnector {
 			);
 			$xmlrpcClient = new xmlrpc_client($url, $options);
 */
-			if (!isset($GLOBALS['HTTP_RAW_POST_DATA']))
-				$GLOBALS['HTTP_RAW_POST_DATA'] = file_get_contents('php://input');
 			// XML/RPC2
 			$url = "https://{$login}:{$password}@{$ipAddress}:8440/RPC2";
 			//echo "$url\n";exit;
