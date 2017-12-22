@@ -320,10 +320,13 @@ class Plugin {
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
 			if (count($extra) == 0) {
-				$msg = 'Blank/Empty Plesk Subscription Info, so either dont know what to remove or nothing to remove';
-				dialog('Error', $msg);
+				/**
+				 * @TODO Double Check The Server To Ensure The Site Isnt There And Our Information Is Correct, If Not Then Update It With Correect Info And Use That To Terminate Instead.
+				 */
+				//$msg = 'Blank/Empty Plesk Subscription Info, so either dont know what to remove or nothing to remove';
+				//dialog('Error', $msg);
 				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__);
-				return FALSE;
+				return TRUE;
 			} else {
 				//list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
 				$subscriptoinId = $extra[2];
