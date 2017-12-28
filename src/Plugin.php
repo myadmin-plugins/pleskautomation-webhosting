@@ -325,7 +325,7 @@ class Plugin {
 				 */
 				//$msg = 'Blank/Empty Plesk Subscription Info, so either dont know what to remove or nothing to remove';
 				//dialog('Error', $msg);
-				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'Blank/Empty Plesk Subscription Info, so either dont know what to remove or nothing to remove', __LINE__, __FILE__);
 				return TRUE;
 			} else {
 				//list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
