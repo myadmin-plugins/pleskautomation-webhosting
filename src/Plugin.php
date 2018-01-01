@@ -296,9 +296,9 @@ class Plugin {
 				try {
 					\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 				} catch (PPAFailedRequestException $e) {
-					echo 'Caught exception: '.$e->getMessage()."\n";
+					echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				} catch (Exception $e) {
-					echo 'Caught exception: '.$e->getMessage()."\n";
+					echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				}
 				myadmin_log(self::$module, 'info', 'disableSubscription Called got '.json_encode($result), __LINE__, __FILE__);
 			}

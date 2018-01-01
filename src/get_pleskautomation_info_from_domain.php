@@ -25,7 +25,7 @@ function get_pleskautomation_info_from_domain($hostname) {
 		$result = $ppaConnector->__call('pleskintegration.getWebspaceIDByPrimaryDomain', ['domain' => $hostname]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
-		echo 'Caught exception: '.$e->getMessage() . "\n";
+		echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 		return FALSE;
 	}
 	$webspaceId = $result['result']['webspace_id'];
@@ -33,7 +33,7 @@ function get_pleskautomation_info_from_domain($hostname) {
 		$result = $ppaConnector->__call('pleskintegration.getWebspace', ['webspace_id' => $webspaceId]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
-		echo 'Caught exception: '.$e->getMessage() . "\n";
+		echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 		return FALSE;
 	}
 	$accountId = $result['result']['owner_id'];
@@ -42,21 +42,21 @@ function get_pleskautomation_info_from_domain($hostname) {
 		$result = $ppaConnector->__call('getSubscription', ['subscription_id' => $subscriptoinId, 'get_resources' => TRUE]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
-		echo 'Caught exception: '.$e->getMessage() . "\n";
+		echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 		return FALSE;
 	}
 	try {
 		$result = $ppaConnector->__call('getAccountInfo', ['account_id' => $accountId]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
-		echo 'Caught exception: '.$e->getMessage() . "\n";
+		echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 		return FALSE;
 	}
 	try {
 		$result = $ppaConnector->__call('getAccountMembers', ['account_id' => $accountId]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
-		echo 'Caught exception: '.$e->getMessage() . "\n";
+		echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 		return FALSE;
 	}
 	$memberId = $result['result'][0];
@@ -64,7 +64,7 @@ function get_pleskautomation_info_from_domain($hostname) {
 		$result = $ppaConnector->__call('getMemberFullInfo', ['member_id' => $memberId]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 	} catch (Exception $e) {
-		echo 'Caught exception: '.$e->getMessage() . "\n";
+		echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 		return FALSE;
 	}
 	myadmin_log('webhosting', 'info', "Plesk Lookup for {$hostname} returned array({$accountId}, {$memberId}, {$subscriptoinId}, {$webspaceId})", __LINE__, __FILE__);
