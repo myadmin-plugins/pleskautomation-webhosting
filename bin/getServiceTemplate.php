@@ -16,7 +16,7 @@ echo "\n";
 try {
 var_export($result);
 	PPAConnector::checkResponse($result);
-} catch (Exception $e) {
+} catch (xception $e) {
 	echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 }
 echo "Success.\n";

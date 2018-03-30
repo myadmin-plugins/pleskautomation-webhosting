@@ -11,7 +11,7 @@ echo preg_replace("/$\s*array\s+\(/msiU", 'array(', var_export($result, TRUE));
 echo "\n";
 try {
 	PPAConnector::checkResponse($result);
-} catch (Exception $e) {
+} catch (xception $e) {
 	echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 }
 echo "Got Account ID: {$result['result']['owner_id']}\n";

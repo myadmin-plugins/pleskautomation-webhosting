@@ -24,7 +24,7 @@ function get_pleskautomation_info_from_domain($hostname) {
 	try {
 		$result = $ppaConnector->__call('pleskintegration.getWebspaceIDByPrimaryDomain', ['domain' => $hostname]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
-	} catch (Exception $e) {
+	} catch (xception $e) {
 		echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 		return FALSE;
 	}
@@ -32,7 +32,7 @@ function get_pleskautomation_info_from_domain($hostname) {
 	try {
 		$result = $ppaConnector->__call('pleskintegration.getWebspace', ['webspace_id' => $webspaceId]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
-	} catch (Exception $e) {
+	} catch (xception $e) {
 		echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 		return FALSE;
 	}
@@ -41,21 +41,21 @@ function get_pleskautomation_info_from_domain($hostname) {
 	try {
 		$result = $ppaConnector->__call('getSubscription', ['subscription_id' => $subscriptoinId, 'get_resources' => TRUE]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
-	} catch (Exception $e) {
+	} catch (xception $e) {
 		echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 		return FALSE;
 	}
 	try {
 		$result = $ppaConnector->__call('getAccountInfo', ['account_id' => $accountId]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
-	} catch (Exception $e) {
+	} catch (xception $e) {
 		echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 		return FALSE;
 	}
 	try {
 		$result = $ppaConnector->__call('getAccountMembers', ['account_id' => $accountId]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
-	} catch (Exception $e) {
+	} catch (xception $e) {
 		echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 		return FALSE;
 	}
@@ -63,7 +63,7 @@ function get_pleskautomation_info_from_domain($hostname) {
 	try {
 		$result = $ppaConnector->__call('getMemberFullInfo', ['member_id' => $memberId]);
 		\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
-	} catch (Exception $e) {
+	} catch (xception $e) {
 		echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 		return FALSE;
 	}
