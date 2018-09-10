@@ -5,5 +5,6 @@ namespace Detain\MyAdminPleskAutomation;
 /**
  * {@inheritDoc}
  */
-class PPAMalformedRequestException extends \Exception {}
-
+class PPAMalformedRequestException extends \Exception
+{
+}

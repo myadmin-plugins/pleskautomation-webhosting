@@ -7,4 +7,6 @@ use Detain\MyAdminPleskAutomation\PPAFailedRequestException;
 /**
  * {@inheritDoc}
  */
-class PPADomainDoesNotExistException extends PPAFailedRequestException {}
+class PPADomainDoesNotExistException extends PPAFailedRequestException
+{
+}

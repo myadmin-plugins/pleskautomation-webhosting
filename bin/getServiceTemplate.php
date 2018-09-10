@@ -5,8 +5,8 @@ $ppaConnector = get_webhosting_ppa_instance();
 $st_id = (isset($_SERVER['argv'][1]) ? (int) $_SERVER['argv'][1] : 12);
 $request = [
 	'st_id' => $st_id,
-	'get_resources' => TRUE,
-	'get_full_info' => FALSE
+	'get_resources' => true,
+	'get_full_info' => false
 ];
 $result = $ppaConnector->getServiceTemplate($request);
 echo 'Result:';
@@ -14,7 +14,7 @@ var_dump($result);
 echo "\n";
 // Parse the response
 try {
-var_export($result);
+	var_export($result);
 	PPAConnector::checkResponse($result);
 } catch (xception $e) {
 	echo 'Caught exception: '.$e->getMessage().PHP_EOL;

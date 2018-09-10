@@ -6,7 +6,7 @@ $request = [
 	'member_id' => $memberId
 ];
 $result = $ppaConnector->getMemberFullInfo($request);
-echo preg_replace("/$\s*array\s+\(/msiU", 'array(', var_export($result, TRUE));
+echo preg_replace("/$\s*array\s+\(/msiU", 'array(', var_export($result, true));
 echo "\n";
 try {
 	PPAConnector::checkResponse($result);

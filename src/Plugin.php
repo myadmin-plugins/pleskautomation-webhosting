@@ -10,8 +10,8 @@ use Symfony\Component\EventDispatcher\GenericEvent;
  *
  * @package Detain\MyAdminPleskAutomation
  */
-class Plugin {
-
+class Plugin
+{
 	public static $name = 'PleskAutomation Webhosting';
 	public static $description = 'Plesk Automation is a scalable, multi-server automation solution for shared hosting, giving growing hosters the power, performance, and scale previously only available to hosting giants.  More info at http://www.odin.com/support/automation-suite/ppa/';
 	public static $help = '';
@@ -21,13 +21,15 @@ class Plugin {
 	/**
 	 * Plugin constructor.
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 	}
 
 	/**
 	 * @return array
 	 */
-	public static function getHooks() {
+	public static function getHooks()
+	{
 		return [
 			self::$module.'.settings' => [__CLASS__, 'getSettings'],
 			self::$module.'.activate' => [__CLASS__, 'getActivate'],
@@ -45,7 +47,8 @@ class Plugin {
 	 * @throws \Exception
 	 * @throws \SmartyException
 	 */
-	public static function getActivate(GenericEvent $event) {
+	public static function getActivate(GenericEvent $event)
+	{
 		if ($event['category'] == get_service_define('WEB_PPA')) {
 			myadmin_log(self::$module, 'info', 'PleskAutomation Activation', __LINE__, __FILE__);
 			$serviceClass = $event->getSubject();
@@ -55,15 +58,17 @@ class Plugin {
 			$ip = $serverdata[$settings['PREFIX'].'_ip'];
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
 			$hostname = $serviceClass->getHostname();
-			if (trim($hostname) == '')
+			if (trim($hostname) == '') {
 				$hostname = $serviceClass->getId().'.server.com';
+			}
 			$password = website_get_password($serviceClass->getId());
 			$username = get_new_webhosting_username($serviceClass->getId(), $hostname, $serviceClass->getServer());
 			include_once __DIR__.'/get_webhosting_ppa_instance.php';
 			$ppaConnector = get_webhosting_ppa_instance($serverdata);
 			$serviceTemplateId = 46;
-			if (!isset($data['name']) || trim($data['name']) == '')
+			if (!isset($data['name']) || trim($data['name']) == '') {
 				$data['name'] = str_replace('@', ' ', $data['account_lid']);
+			}
 			list($first, $last) = explode(' ', $data['name']);
 			$requestPerson = [
 				'first_name' => $first,
@@ -100,8 +105,9 @@ class Plugin {
 			}
 			request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'addAccount', $request, $result);
 			$accountId = $result['result']['account_id'];
-			if (!is_array($extra))
+			if (!is_array($extra)) {
 				$extra = [];
+			}
 			$extra[0] = $accountId;
 			$db = get_module_db(self::$module);
 			$serExtra = $db->real_escape(myadmin_stringify($extra));
@@ -196,11 +202,11 @@ class Plugin {
 			if (is_numeric($webspaceId)) {
 				//myadmin_log(self::$module, 'info', "Success, Response: " . var_export($vesta->response, TRUE), __LINE__, __FILE__);;
 				website_welcome_email($serviceClass->getId());
-				$event['success'] = TRUE;
+				$event['success'] = true;
 			} else {
 				add_output('Error Creating Website');
-				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($result, TRUE), __LINE__, __FILE__);
-				$event['success'] = FALSE;
+				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($result, true), __LINE__, __FILE__);
+				$event['success'] = false;
 			}
 			/*
 			  $request = array(
@@ -235,7 +241,8 @@ class Plugin {
 	 * @throws \Detain\MyAdminPleskAutomation\Detain\MyAdminPleskAutomation\PPAFailedRequestException
 	 * @throws \Detain\MyAdminPleskAutomation\Detain\MyAdminPleskAutomation\PPAMalformedRequestException
 	 */
-	public static function getReactivate(GenericEvent $event) {
+	public static function getReactivate(GenericEvent $event)
+	{
 		if ($event['category'] == get_service_define('WEB_PPA')) {
 			$serviceClass = $event->getSubject();
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
@@ -249,12 +256,12 @@ class Plugin {
 				$msg = 'Blank/Empty Plesk Subscription Info, Email support@interserver.net about this';
 				dialog('Error', $msg);
 				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__);
-				$event['success'] = FALSE;
+				$event['success'] = false;
 			} else {
 				//list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
 				$subscriptoinId = $extra[2];
 				function_requirements('get_webhosting_ppa_instance');
-			include_once __DIR__.'/get_webhosting_ppa_instance.php';
+				include_once __DIR__.'/get_webhosting_ppa_instance.php';
 				$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				$request = ['subscription_id' => $subscriptoinId];
 				$result = $ppaConnector->enableSubscription($request);
@@ -273,7 +280,8 @@ class Plugin {
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 * @throws \Detain\MyAdminPleskAutomation\PPAMalformedRequestException
 	 */
-	public static function getDeactivate(GenericEvent $event) {
+	public static function getDeactivate(GenericEvent $event)
+	{
 		if ($event['category'] == get_service_define('WEB_PPA')) {
 			myadmin_log(self::$module, 'info', 'PleskAutomation Deactivation', __LINE__, __FILE__);
 			$serviceClass = $event->getSubject();
@@ -286,7 +294,7 @@ class Plugin {
 			} else {
 				//list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
 				$subscriptoinId = $extra[2];
-			include_once __DIR__.'/get_webhosting_ppa_instance.php';
+				include_once __DIR__.'/get_webhosting_ppa_instance.php';
 				$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				$request = [
 					'subscription_id' => $subscriptoinId
@@ -312,7 +320,8 @@ class Plugin {
 	 * @throws \Detain\MyAdminPleskAutomation\PPAFailedRequestException
 	 * @throws \Detain\MyAdminPleskAutomation\PPAMalformedRequestException
 	 */
-	public static function getTerminate(GenericEvent $event) {
+	public static function getTerminate(GenericEvent $event)
+	{
 		if ($event['category'] == get_service_define('WEB_PPA')) {
 			$event->stopPropagation();
 			myadmin_log(self::$module, 'info', 'PleskAutomation Termination', __LINE__, __FILE__);
@@ -326,16 +335,16 @@ class Plugin {
 				//$msg = 'Blank/Empty Plesk Subscription Info, so either dont know what to remove or nothing to remove';
 				//dialog('Error', $msg);
 				myadmin_log(self::$module, 'info', 'Blank/Empty Plesk Subscription Info, so either dont know what to remove or nothing to remove', __LINE__, __FILE__);
-				return TRUE;
+				return true;
 			} else {
 				//list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
 				$subscriptoinId = $extra[2];
 				try {
-			include_once __DIR__.'/get_webhosting_ppa_instance.php';
+					include_once __DIR__.'/get_webhosting_ppa_instance.php';
 					$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				} catch (xception $e) {
 					myadmin_log(self::$module, 'info', 'PPAConnector::getInstance Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
-					return FALSE;
+					return false;
 				}
 				$request = [
 					'subscription_id' => $subscriptoinId
@@ -344,14 +353,14 @@ class Plugin {
 					$result = $ppaConnector->disableSubscription($request);
 				} catch (xception $e) {
 					myadmin_log(self::$module, 'info', 'ppaConnector->disableSubscription Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
-					return FALSE;
+					return false;
 				}
 				//echo "Result:";var_dump($result);echo "\n";
 				try {
 					\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 				} catch (xception $e) {
 					myadmin_log(self::$module, 'info', 'PPAConnector::checkResponse Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
-					return FALSE;
+					return false;
 				}
 				/*
 				  $request = array(
@@ -378,7 +387,7 @@ class Plugin {
 				  echo "Success Removing Account.\n";
 				 */
 				myadmin_log(self::$module, 'info', 'disableSubscription Called got '.json_encode($result), __LINE__, __FILE__);
-				return TRUE;
+				return true;
 			}
 		}
 	}
@@ -386,7 +395,8 @@ class Plugin {
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getChangeIp(GenericEvent $event) {
+	public static function getChangeIp(GenericEvent $event)
+	{
 		if ($event['category'] == get_service_define('WEB_PPA')) {
 			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
@@ -410,7 +420,8 @@ class Plugin {
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getMenu(GenericEvent $event) {
+	public static function getMenu(GenericEvent $event)
+	{
 		$menu = $event->getSubject();
 		if ($GLOBALS['tf']->ima == 'admin') {
 			$menu->add_link(self::$module, 'choice=none.reusable_pleskautomation', '/images/myadmin/to-do.png', 'ReUsable PleskAutomation Licenses');
@@ -422,7 +433,8 @@ class Plugin {
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getRequirements(GenericEvent $event) {
+	public static function getRequirements(GenericEvent $event)
+	{
 		$loader = $event->getSubject();
 		$loader->add_requirement('get_pleskautomation_info_from_domain', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/get_pleskautomation_info_from_domain.php');
 		$loader->add_requirement('get_webhosting_ppa_instance', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/get_webhosting_ppa_instance.php');
@@ -431,10 +443,10 @@ class Plugin {
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-	public static function getSettings(GenericEvent $event) {
+	public static function getSettings(GenericEvent $event)
+	{
 		$settings = $event->getSubject();
 		$settings->add_select_master(self::$module, 'Default Servers', self::$module, 'new_website_ppa_server', 'Default Plesk Automation Setup Server', NEW_WEBSITE_PPA_SERVER, get_service_define('WEB_PPA'));
 		$settings->add_dropdown_setting(self::$module, 'Out of Stock', 'outofstock_webhosting_ppa', 'Out Of Stock Plesk Automation Webhosting', 'Enable/Disable Sales Of This Type', $settings->get_setting('OUTOFSTOCK_WEBHOSTING_PPA'), ['0', '1'], ['No', 'Yes']);
 	}
-
 }
