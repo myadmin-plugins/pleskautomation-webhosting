@@ -99,7 +99,7 @@ class Plugin
 				$result = $ppaConnector->addAccount($request);
 				//echo "Result:";var_dump($result);echo "\n";
 				PPAConnector::checkResponse($result);
-			} catch (xception $e) {
+			} catch (\Exception $e) {
 				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				myadmin_log(self::$module, 'info', 'addAccount Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
@@ -128,7 +128,7 @@ class Plugin
 				$result = $ppaConnector->addAccountMember($request);
 				//echo "Result:";var_dump($result);echo "\n";
 				PPAConnector::checkResponse($result);
-			} catch (xception $e) {
+			} catch (\Exception $e) {
 				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				myadmin_log(self::$module, 'info', 'addAccountMember Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
@@ -147,7 +147,7 @@ class Plugin
 				$result = $ppaConnector->activateSubscription($request);
 				//echo "Result:";var_dump($result);echo "\n";
 				PPAConnector::checkResponse($result);
-			} catch (xception $e) {
+			} catch (\Exception $e) {
 				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				myadmin_log(self::$module, 'info', 'activatesubscription Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
@@ -166,7 +166,7 @@ class Plugin
 			  echo "Result:";var_dump($result);echo "\n";
 			  try {
 				PPAConnector::checkResponse($result);
-			  } catch (xception $e) {
+			  } catch (\Exception $e) {
 			  echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 			  }
 			  print_r($result);
@@ -189,7 +189,7 @@ class Plugin
 				$result = $ppaConnector->{'pleskintegration.createWebspace'}($request);
 				//echo "Result:";var_dump($result);echo "\n";
 				PPAConnector::checkResponse($result);
-			} catch (xception $e) {
+			} catch (\Exception $e) {
 				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				myadmin_log(self::$module, 'info', 'createWebspace Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 			}
@@ -216,7 +216,7 @@ class Plugin
 			  //echo "Result:";var_dump($result);echo "\n";
 			  try {
 				PPAConnector::checkResponse($result);
-			  } catch (xception $e) {
+			  } catch (\Exception $e) {
 			  echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 			  }
 			  echo "Success Removing Subscription\n";
@@ -227,7 +227,7 @@ class Plugin
 			  //echo "Result:";var_dump($result);echo "\n";
 			  try {
 				PPAConnector::checkResponse($result);
-			  } catch (xception $e) {
+			  } catch (\Exception $e) {
 			  echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 			  }
 			  echo "Success Removing Account.\n";
@@ -305,7 +305,7 @@ class Plugin
 					\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 				} catch (PPAFailedRequestException $e) {
 					echo 'Caught exception: '.$e->getMessage().PHP_EOL;
-				} catch (xception $e) {
+				} catch (\Exception $e) {
 					echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				}
 				myadmin_log(self::$module, 'info', 'disableSubscription Called got '.json_encode($result), __LINE__, __FILE__);
@@ -342,7 +342,7 @@ class Plugin
 				try {
 					include_once __DIR__.'/get_webhosting_ppa_instance.php';
 					$ppaConnector = get_webhosting_ppa_instance($serverdata);
-				} catch (xception $e) {
+				} catch (\Exception $e) {
 					myadmin_log(self::$module, 'info', 'PPAConnector::getInstance Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 					return false;
 				}
@@ -351,14 +351,14 @@ class Plugin
 				];
 				try {
 					$result = $ppaConnector->disableSubscription($request);
-				} catch (xception $e) {
+				} catch (\Exception $e) {
 					myadmin_log(self::$module, 'info', 'ppaConnector->disableSubscription Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 					return false;
 				}
 				//echo "Result:";var_dump($result);echo "\n";
 				try {
 					\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
-				} catch (xception $e) {
+				} catch (\Exception $e) {
 					myadmin_log(self::$module, 'info', 'PPAConnector::checkResponse Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
 					return false;
 				}
@@ -370,7 +370,7 @@ class Plugin
 				  //echo "Result:";var_dump($result);echo "\n";
 				  try {
 					\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
-				  } catch (xception $e) {
+				  } catch (\Exception $e) {
 				  echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				  }
 				  echo "Success Removing Subscription\n";
@@ -381,7 +381,7 @@ class Plugin
 				  //echo "Result:";var_dump($result);echo "\n";
 				  try {
 					\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
-				  } catch (xception $e) {
+				  } catch (\Exception $e) {
 					  echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				  }
 				  echo "Success Removing Account.\n";

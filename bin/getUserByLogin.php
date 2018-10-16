@@ -10,7 +10,7 @@ echo preg_replace("/$\s*array\s+\(/msiU", 'array(', var_export($result, true));
 echo "\n";
 try {
 	PPAConnector::checkResponse($result);
-} catch (xception $e) {
+} catch (\Exception $e) {
 	echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 }
 echo "Success.\n";

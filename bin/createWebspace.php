@@ -24,7 +24,7 @@ var_dump($result);
 echo "\n";
 try {
 	PPAConnector::checkResponse($result);
-} catch (xception $e) {
+} catch (\Exception $e) {
 	echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 }
 echo "Got Subscription ID: {$result['result']['webspace_id']}\n";

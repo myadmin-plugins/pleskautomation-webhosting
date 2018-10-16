@@ -18,7 +18,7 @@ echo "\n";
 // Parse the response
 try {
 	PPAConnector::checkResponse($result);
-} catch (xception $e) {
+} catch (\Exception $e) {
 	echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 }
 echo "Success.\nGot Account ID: {$result['result']['account_id']}\n";
