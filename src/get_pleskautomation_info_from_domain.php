@@ -68,6 +68,6 @@ function get_pleskautomation_info_from_domain($hostname)
 		echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 		return false;
 	}
-	myadmin_log('webhosting', 'info', "Plesk Lookup for {$hostname} returned array({$accountId}, {$memberId}, {$subscriptoinId}, {$webspaceId})", __LINE__, __FILE__);
+	myadmin_log('webhosting', 'info', "Plesk Lookup for {$hostname} returned array({$accountId}, {$memberId}, {$subscriptoinId}, {$webspaceId})", __LINE__, __FILE__, $module);
 	return [$accountId, $memberId, $subscriptoinId, $webspaceId];
 }
