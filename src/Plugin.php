@@ -50,8 +50,8 @@ class Plugin
 	public static function getActivate(GenericEvent $event)
 	{
 		if ($event['category'] == get_service_define('WEB_PPA')) {
-			myadmin_log(self::$module, 'info', 'PleskAutomation Activation', __LINE__, __FILE__);
 			$serviceClass = $event->getSubject();
+            myadmin_log(self::$module, 'info', 'PleskAutomation Activation', __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			$settings = get_module_settings(self::$module);
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
 			$data = $GLOBALS['tf']->accounts->read($serviceClass->getCustid());
@@ -101,7 +101,7 @@ class Plugin
 				PPAConnector::checkResponse($result);
 			} catch (\Exception $e) {
 				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
-				myadmin_log(self::$module, 'info', 'addAccount Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'addAccount Caught exception: '.$e->getMessage(), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			}
 			request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'addAccount', $request, $result);
 			$accountId = $result['result']['account_id'];
@@ -112,7 +112,7 @@ class Plugin
 			$db = get_module_db(self::$module);
 			$serExtra = $db->real_escape(myadmin_stringify($extra));
 			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$serExtra}' where {$settings['PREFIX']}_id='{$serviceClass->getId()}'", __LINE__, __FILE__);
-			myadmin_log(self::$module, 'info', "addAccount Got Account ID: {$accountId}", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "addAccount Got Account ID: {$accountId}", __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			$request = [
 				'account_id' => $accountId,
 				'auth' => [
@@ -130,7 +130,7 @@ class Plugin
 				PPAConnector::checkResponse($result);
 			} catch (\Exception $e) {
 				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
-				myadmin_log(self::$module, 'info', 'addAccountMember Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'addAccountMember Caught exception: '.$e->getMessage(), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			}
 			request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'addAccountMember', $request, $result);
 			$userId = $result['result']['user_id'];
@@ -138,7 +138,7 @@ class Plugin
 			$extra[1] = $userId;
 			$serExtra = $db->real_escape(myadmin_stringify($extra));
 			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$serExtra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceClass->getId()}'", __LINE__, __FILE__);
-			myadmin_log(self::$module, 'info', "addAccountMember Got Account ID: {$userId}  Username: {$username}  Password: {$password}", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "addAccountMember Got Account ID: {$userId}  Username: {$username}  Password: {$password}", __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			$request = [
 				'account_id' => $accountId,
 				'service_template_id' => $serviceTemplateId
@@ -149,14 +149,14 @@ class Plugin
 				PPAConnector::checkResponse($result);
 			} catch (\Exception $e) {
 				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
-				myadmin_log(self::$module, 'info', 'activatesubscription Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'activatesubscription Caught exception: '.$e->getMessage(), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			}
 			request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'activateSubscription', $request, $result);
 			$subscriptoinId = $result['result']['subscription_id'];
 			$extra[2] = $subscriptoinId;
 			$serExtra = $db->real_escape(myadmin_stringify($extra));
 			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$serExtra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceClass->getId()}'", __LINE__, __FILE__);
-			myadmin_log(self::$module, 'info', "activateSubscription Got Subscription ID: {$subscriptoinId}", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "activateSubscription Got Subscription ID: {$subscriptoinId}", __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			/*
 			  $request = array(
 			  'subscription_id' => $subscriptoinId,
@@ -191,21 +191,21 @@ class Plugin
 				PPAConnector::checkResponse($result);
 			} catch (\Exception $e) {
 				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
-				myadmin_log(self::$module, 'info', 'createWebspace Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'createWebspace Caught exception: '.$e->getMessage(), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			}
 			request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'createWebspace', $request, $result);
 			$webspaceId = $result['result']['webspace_id'];
 			$extra[3] = $webspaceId;
 			$serExtra = $db->real_escape(myadmin_stringify($extra));
 			$db->query("update {$settings['TABLE']} set {$settings['PREFIX']}_ip='{$ip}', {$settings['PREFIX']}_extra='{$serExtra}', {$settings['PREFIX']}_username='{$username}' where {$settings['PREFIX']}_id='{$serviceClass->getId()}'", __LINE__, __FILE__);
-			myadmin_log(self::$module, 'info', "Got Website ID: {$webspaceId}", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', "Got Website ID: {$webspaceId}", __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			if (is_numeric($webspaceId)) {
-				//myadmin_log(self::$module, 'info', "Success, Response: " . var_export($vesta->response, TRUE), __LINE__, __FILE__);;
+				//myadmin_log(self::$module, 'info', "Success, Response: " . var_export($vesta->response, TRUE), __LINE__, __FILE__, self::$module, $serviceClass->getId());;
 				website_welcome_email($serviceClass->getId());
 				$event['success'] = true;
 			} else {
 				add_output('Error Creating Website');
-				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($result, true), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($result, true), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 				$event['success'] = false;
 			}
 			/*
@@ -255,7 +255,7 @@ class Plugin
 			if (count($extra) == 0) {
 				$msg = 'Blank/Empty Plesk Subscription Info, Email support@interserver.net about this';
 				dialog('Error', $msg);
-				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__, self::$module, $serviceClass->getId());
 				$event['success'] = false;
 			} else {
 				//list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
@@ -270,7 +270,7 @@ class Plugin
 				} catch (\Exception $e) {
 					echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				}
-				myadmin_log(self::$module, 'info', 'enableSubscription Called got '.json_encode($result), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'enableSubscription Called got '.json_encode($result), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			}
 			$event->stopPropagation();
 		}
@@ -290,7 +290,7 @@ class Plugin
 			if (count($extra) == 0) {
 				$msg = 'Blank/Empty Plesk Subscription Info, so either dont know what to remove or nothing to remove';
 				dialog('Error', $msg);
-				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', $msg, __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			} else {
 				//list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
 				$subscriptoinId = $extra[2];
@@ -308,7 +308,7 @@ class Plugin
 				} catch (\Exception $e) {
 					echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				}
-				myadmin_log(self::$module, 'info', 'disableSubscription Called got '.json_encode($result), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'disableSubscription Called got '.json_encode($result), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			}
 			$event->stopPropagation();
 		}
@@ -334,7 +334,7 @@ class Plugin
 				 */
 				//$msg = 'Blank/Empty Plesk Subscription Info, so either dont know what to remove or nothing to remove';
 				//dialog('Error', $msg);
-				myadmin_log(self::$module, 'info', 'Blank/Empty Plesk Subscription Info, so either dont know what to remove or nothing to remove', __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'Blank/Empty Plesk Subscription Info, so either dont know what to remove or nothing to remove', __LINE__, __FILE__, self::$module, $serviceClass->getId());
 				return true;
 			} else {
 				//list($accountId, $userId, $subscriptoinId, $webspaceId) = $extra;
@@ -343,7 +343,7 @@ class Plugin
 					include_once __DIR__.'/get_webhosting_ppa_instance.php';
 					$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				} catch (\Exception $e) {
-					myadmin_log(self::$module, 'info', 'PPAConnector::getInstance Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
+					myadmin_log(self::$module, 'info', 'PPAConnector::getInstance Caught exception: '.$e->getMessage(), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 					return false;
 				}
 				$request = [
@@ -352,14 +352,14 @@ class Plugin
 				try {
 					$result = $ppaConnector->disableSubscription($request);
 				} catch (\Exception $e) {
-					myadmin_log(self::$module, 'info', 'ppaConnector->disableSubscription Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
+					myadmin_log(self::$module, 'info', 'ppaConnector->disableSubscription Caught exception: '.$e->getMessage(), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 					return false;
 				}
 				//echo "Result:";var_dump($result);echo "\n";
 				try {
 					\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 				} catch (\Exception $e) {
-					myadmin_log(self::$module, 'info', 'PPAConnector::checkResponse Caught exception: '.$e->getMessage(), __LINE__, __FILE__);
+					myadmin_log(self::$module, 'info', 'PPAConnector::checkResponse Caught exception: '.$e->getMessage(), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 					return false;
 				}
 				/*
@@ -386,7 +386,7 @@ class Plugin
 				  }
 				  echo "Success Removing Account.\n";
 				 */
-				myadmin_log(self::$module, 'info', 'disableSubscription Called got '.json_encode($result), __LINE__, __FILE__);
+				myadmin_log(self::$module, 'info', 'disableSubscription Called got '.json_encode($result), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 				return true;
 			}
 		}
@@ -401,7 +401,7 @@ class Plugin
 			$serviceClass = $event->getSubject();
 			$settings = get_module_settings(self::$module);
 			$pleskautomation = new PleskAutomation(FANTASTICO_USERNAME, FANTASTICO_PASSWORD);
-			myadmin_log(self::$module, 'info', 'IP Change - (OLD:'.$serviceClass->getIp().") (NEW:{$event['newip']})", __LINE__, __FILE__);
+			myadmin_log(self::$module, 'info', 'IP Change - (OLD:'.$serviceClass->getIp().") (NEW:{$event['newip']})", __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			$result = $pleskautomation->editIp($serviceClass->getIp(), $event['newip']);
 			if (isset($result['faultcode'])) {
 				myadmin_log(self::$module, 'error', 'PleskAutomation editIp('.$serviceClass->getIp().', '.$event['newip'].') returned Fault '.$result['faultcode'].': '.$result['fault'], __LINE__, __FILE__, self::$module);
