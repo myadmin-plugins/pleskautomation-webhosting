@@ -51,7 +51,7 @@ class Plugin
 	{
 		if ($event['category'] == get_service_define('WEB_PPA')) {
 			$serviceClass = $event->getSubject();
-            myadmin_log(self::$module, 'info', 'PleskAutomation Activation', __LINE__, __FILE__, self::$module, $serviceClass->getId());
+			myadmin_log(self::$module, 'info', 'PleskAutomation Activation', __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			$settings = get_module_settings(self::$module);
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
 			$data = $GLOBALS['tf']->accounts->read($serviceClass->getCustid());
@@ -283,7 +283,7 @@ class Plugin
 	public static function getDeactivate(GenericEvent $event)
 	{
 		if ($event['category'] == get_service_define('WEB_PPA')) {
-            $serviceClass = $event->getSubject();
+			$serviceClass = $event->getSubject();
 			myadmin_log(self::$module, 'info', 'PleskAutomation Deactivation', __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
@@ -324,7 +324,7 @@ class Plugin
 	{
 		if ($event['category'] == get_service_define('WEB_PPA')) {
 			$event->stopPropagation();
-            $serviceClass = $event->getSubject();
+			$serviceClass = $event->getSubject();
 			myadmin_log(self::$module, 'info', 'PleskAutomation Termination', __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			$extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
 			$serverdata = get_service_master($serviceClass->getServer(), self::$module);
@@ -435,10 +435,10 @@ class Plugin
 	 */
 	public static function getRequirements(GenericEvent $event)
 	{
-        /**
-         * @var \MyAdmin\Plugins\Loader $this->loader
-         */
-        $loader = $event->getSubject();
+		/**
+		 * @var \MyAdmin\Plugins\Loader $this->loader
+		 */
+		$loader = $event->getSubject();
 		$loader->add_requirement('get_pleskautomation_info_from_domain', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/get_pleskautomation_info_from_domain.php');
 		$loader->add_requirement('get_webhosting_ppa_instance', '/../vendor/detain/myadmin-pleskautomation-webhosting/src/get_webhosting_ppa_instance.php');
 	}
@@ -446,15 +446,15 @@ class Plugin
 	/**
 	 * @param \Symfony\Component\EventDispatcher\GenericEvent $event
 	 */
-    public static function getSettings(GenericEvent $event)
-    {
-        /**
-         * @var \MyAdmin\Settings $settings
-         **/
-        $settings = $event->getSubject();
-        $settings->setTarget('module');
+	public static function getSettings(GenericEvent $event)
+	{
+		/**
+		 * @var \MyAdmin\Settings $settings
+		 **/
+		$settings = $event->getSubject();
+		$settings->setTarget('module');
 		$settings->add_select_master(_(self::$module), _('Default Servers'), self::$module, 'new_website_ppa_server', _('Default Plesk Automation Setup Server'), NEW_WEBSITE_PPA_SERVER, get_service_define('WEB_PPA'));
 		$settings->add_dropdown_setting(self::$module, _('Out of Stock'), 'outofstock_webhosting_ppa', _('Out Of Stock Plesk Automation Webhosting'), _('Enable/Disable Sales Of This Type'), $settings->get_setting('OUTOFSTOCK_WEBHOSTING_PPA'), ['0', '1'], ['No', 'Yes']);
-        $settings->setTarget('global');
+		$settings->setTarget('global');
 	}
 }
