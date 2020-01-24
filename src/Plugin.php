@@ -103,7 +103,7 @@ class Plugin
 				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				myadmin_log(self::$module, 'info', 'addAccount Caught exception: '.$e->getMessage(), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			}
-			request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'addAccount', $request, $result);
+			request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'addAccount', $request, $result, $serviceClass->getId());
 			$accountId = $result['result']['account_id'];
 			if (!is_array($extra)) {
 				$extra = [];
@@ -132,7 +132,7 @@ class Plugin
 				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				myadmin_log(self::$module, 'info', 'addAccountMember Caught exception: '.$e->getMessage(), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			}
-			request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'addAccountMember', $request, $result);
+			request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'addAccountMember', $request, $result, $serviceClass->getId());
 			$userId = $result['result']['user_id'];
 			$username = $db->real_escape($username);
 			$extra[1] = $userId;
@@ -151,7 +151,7 @@ class Plugin
 				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				myadmin_log(self::$module, 'info', 'activatesubscription Caught exception: '.$e->getMessage(), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			}
-			request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'activateSubscription', $request, $result);
+			request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'activateSubscription', $request, $result, $serviceClass->getId());
 			$subscriptoinId = $result['result']['subscription_id'];
 			$extra[2] = $subscriptoinId;
 			$serExtra = $db->real_escape(myadmin_stringify($extra));
@@ -193,7 +193,7 @@ class Plugin
 				echo 'Caught exception: '.$e->getMessage().PHP_EOL;
 				myadmin_log(self::$module, 'info', 'createWebspace Caught exception: '.$e->getMessage(), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			}
-			request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'createWebspace', $request, $result);
+			request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'createWebspace', $request, $result, $serviceClass->getId());
 			$webspaceId = $result['result']['webspace_id'];
 			$extra[3] = $webspaceId;
 			$serExtra = $db->real_escape(myadmin_stringify($extra));
