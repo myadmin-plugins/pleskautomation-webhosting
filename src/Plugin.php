@@ -303,10 +303,13 @@ class Plugin
 				//echo "Result:";var_dump($result);echo "\n";
 				try {
 					\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
+					$event['success'] = true;
 				} catch (PPAFailedRequestException $e) {
 					echo 'Caught exception: '.$e->getMessage().PHP_EOL;
+					$event['success'] = false;
 				} catch (\Exception $e) {
 					echo 'Caught exception: '.$e->getMessage().PHP_EOL;
+					$event['success'] = false;
 				}
 				myadmin_log(self::$module, 'info', 'disableSubscription Called got '.json_encode($result), __LINE__, __FILE__, self::$module, $serviceClass->getId());
 			}
@@ -344,6 +347,7 @@ class Plugin
 					$ppaConnector = get_webhosting_ppa_instance($serverdata);
 				} catch (\Exception $e) {
 					myadmin_log(self::$module, 'info', 'PPAConnector::getInstance Caught exception: '.$e->getMessage(), __LINE__, __FILE__, self::$module, $serviceClass->getId());
+					$event['success'] = false;
 					return false;
 				}
 				$request = [
@@ -353,6 +357,7 @@ class Plugin
 					$result = $ppaConnector->disableSubscription($request);
 				} catch (\Exception $e) {
 					myadmin_log(self::$module, 'info', 'ppaConnector->disableSubscription Caught exception: '.$e->getMessage(), __LINE__, __FILE__, self::$module, $serviceClass->getId());
+					$event['success'] = false;
 					return false;
 				}
 				//echo "Result:";var_dump($result);echo "\n";
@@ -360,6 +365,7 @@ class Plugin
 					\Detain\MyAdminPleskAutomation\PPAConnector::checkResponse($result);
 				} catch (\Exception $e) {
 					myadmin_log(self::$module, 'info', 'PPAConnector::checkResponse Caught exception: '.$e->getMessage(), __LINE__, __FILE__, self::$module, $serviceClass->getId());
+					$event['success'] = false;
 					return false;
 				}
 				/*
