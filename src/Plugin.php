@@ -459,7 +459,7 @@ class Plugin
 		 **/
 		$settings = $event->getSubject();
 		$settings->setTarget('module');
-		$settings->add_select_master(_(self::$module), _('Default Servers'), self::$module, 'new_website_ppa_server', _('Default Plesk Automation Setup Server'), NEW_WEBSITE_PPA_SERVER, get_service_define('WEB_PPA'));
+		$settings->add_select_master(_(self::$module), _('Default Servers'), self::$module, 'new_website_ppa_server', _('Default Plesk Automation Setup Server'), defined('NEW_WEBSITE_PPA_SERVER') ? NEW_WEBSITE_PPA_SERVER : 0, get_service_define('WEB_PPA'));
 		$settings->add_dropdown_setting(self::$module, _('Out of Stock'), 'outofstock_webhosting_ppa', _('Out Of Stock Plesk Automation Webhosting'), _('Enable/Disable Sales Of This Type'), $settings->get_setting('OUTOFSTOCK_WEBHOSTING_PPA'), ['0', '1'], ['No', 'Yes']);
 		$settings->setTarget('global');
 	}
