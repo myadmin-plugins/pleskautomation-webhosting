@@ -7,18 +7,18 @@
  */
 function get_webhosting_ppa_instance($server = false)
 {
-	$module = 'webhosting';
-	$settings = \get_module_settings($module);
-	if (is_array($server)) {
-		$serverData = $server;
-	} else {
-		if ($server === false) {
-			$server = NEW_WEBSITE_PPA_SERVER;
-		}
-		$serverData = get_service_master($server, $module);
-	}
-	$hash = $serverData[$settings['PREFIX'].'_key'];
-	$ip = $serverData[$settings['PREFIX'].'_ip'];
-	list($pleskUser, $pleskPass) = explode(':', html_entity_decode($hash));
-	return \Detain\MyAdminPleskAutomation\PPAConnector::getInstance($ip, $pleskUser, $pleskPass);
+    $module = 'webhosting';
+    $settings = \get_module_settings($module);
+    if (is_array($server)) {
+        $serverData = $server;
+    } else {
+        if ($server === false) {
+            $server = NEW_WEBSITE_PPA_SERVER;
+        }
+        $serverData = get_service_master($server, $module);
+    }
+    $hash = $serverData[$settings['PREFIX'].'_key'];
+    $ip = $serverData[$settings['PREFIX'].'_ip'];
+    list($pleskUser, $pleskPass) = explode(':', html_entity_decode($hash));
+    return \Detain\MyAdminPleskAutomation\PPAConnector::getInstance($ip, $pleskUser, $pleskPass);
 }
