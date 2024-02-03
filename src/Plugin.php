@@ -69,24 +69,24 @@ class Plugin
             if (!isset($data['name']) || trim($data['name']) == '') {
                 $data['name'] = str_replace('@', ' ', $data['account_lid']);
             }
-            list($first, $last) = explode(' ', $data['name']);
+            [$first, $last] = explode(' ', $data['name']);
             $requestPerson = [
                 'first_name' => $first,
                 'last_name' => $last,
-                'company_name' => isset($data['company']) ? $data['company'] : ''
+                'company_name' => $data['company'] ?? ''
             ];
             $requestAddress = [
-                'street_name' => isset($data['address']) ? $data['address'] : '',
-                'address2' => isset($data['address2']) ? $data['address2'] : '',
-                'zipcode' => isset($data['zip']) ? $data['zip'] : '',
-                'city' => isset($data['city']) ? $data['city'] : '',
+                'street_name' => $data['address'] ?? '',
+                'address2' => $data['address2'] ?? '',
+                'zipcode' => $data['zip'] ?? '',
+                'city' => $data['city'] ?? '',
                 'country' => convert_country_iso2($data['country']),
-                'state' => isset($data['state']) ? $data['state'] : ''
+                'state' => $data['state'] ?? ''
             ];
             $requestPhone = [
                 'country_code' => '1',
                 'area_code' => '',
-                'phone_num' => isset($data['phone']) ? $data['phone'] : '',
+                'phone_num' => $data['phone'] ?? '',
                 'ext_num' => ''
             ];
             $request = [

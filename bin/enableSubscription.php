@@ -5,7 +5,7 @@ $ppaConnector = get_webhosting_ppa_instance();
 // let us form an array with account data
 $password = _randomstring(10);
 $data = $GLOBALS['tf']->accounts->read(2773);
-list($first, $last) = explode(' ', $data['name']);
+[$first, $last] = explode(' ', $data['name']);
 $request = [
     'subscription_id' => $subscriptoinId
 ];

@@ -4,7 +4,7 @@ include_once __DIR__.'/../../../../include/functions.inc.php';
 $ppaConnector = get_webhosting_ppa_instance();
 // let us form an array with account data
 $data = $GLOBALS['tf']->accounts->read(2773);
-list($first, $last) = explode(' ', $data['name']);
+[$first, $last] = explode(' ', $data['name']);
 $request = [
     'person' => [
         'first_name' => $first,
