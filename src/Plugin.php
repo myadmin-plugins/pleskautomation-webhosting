@@ -61,7 +61,7 @@ class Plugin
             if (trim($hostname) == '') {
                 $hostname = $serviceClass->getId().'.server.com';
             }
-            $password = website_get_password($serviceClass->getId());
+            $password = website_get_password($serviceClass->getId(), $serviceClass->getCustid());
             $username = get_new_webhosting_username($serviceClass->getId(), $hostname, $serviceClass->getServer());
             include_once __DIR__.'/get_webhosting_ppa_instance.php';
             $ppaConnector = get_webhosting_ppa_instance($serverdata);
