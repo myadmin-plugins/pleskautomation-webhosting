@@ -1,11 +1,14 @@
 {
 	"name": "detain/myadmin-pleskautomation-webhosting",
 	"type": "myadmin-plugin",
-	"description": "PleskAutomation Webhosting Class",
+	"description": "MyAdmin PleskAutomation Webhosting Plugin - Provides Parallels Plesk Automation (PPA) integration for webhosting provisioning, including account creation, subscription management, and webspace lifecycle operations via XML-RPC.",
 	"keywords": [
 		"pleskautomation",
 		"administration",
-		"license"
+		"webhosting",
+		"plesk",
+		"myadmin",
+		"plugin"
 	],
 	"license": "LGPL-2.1-only",
 	"authors": [
@@ -16,25 +19,28 @@
 	],
 	"config": {
 		"bin-dir": "vendor\/bin",
-		"minimum-stability": "dev"
+		"minimum-stability": "dev",
+		"allow-plugins": {
+			"detain/myadmin-plugin-installer": true
+		}
 	},
 	"require": {
-		"php": ">=5.0.0",
+		"php": ">=8.2",
 		"ext-soap": "*",
-		"symfony/event-dispatcher": "^5.0@stable",
+		"symfony/event-dispatcher": "^5.0||^6.0||^7.0",
 		"detain/myadmin-plugin-installer": "dev-master"
-    },
+	},
 	"require-dev": {
-		"phpunit/phpunit": "*",
-		"phpunit/phpunit-mock-objects": "*",
-		"vlucas/phpdotenv": "*",
-		"codeclimate/php-test-reporter": "dev-master",
-		"satooshi/php-coveralls": "*",
-		"codacy/coverage": "dev-master"
+		"phpunit/phpunit": "^9.6"
 	},
 	"autoload": {
 		"psr-4": {
 			"Detain\\MyAdminPleskAutomation\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Detain\\MyAdminPleskAutomation\\Tests\\": "tests/"
 		}
 	}
 }
