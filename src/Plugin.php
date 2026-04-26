@@ -54,7 +54,7 @@ class Plugin
             myadmin_log(self::$module, 'info', 'PleskAutomation Activation', __LINE__, __FILE__, self::$module, $serviceClass->getId());
             $settings = get_module_settings(self::$module);
             $serverdata = get_service_master($serviceClass->getServer(), self::$module);
-            $data = $GLOBALS['tf']->accounts->read($serviceClass->getCustid());
+            $data = \MyAdmin\App::accounts()->read($serviceClass->getCustid());
             $ip = $serverdata[$settings['PREFIX'].'_ip'];
             $extra = run_event('parse_service_extra', $serviceClass->getExtra(), self::$module);
             $hostname = $serviceClass->getHostname();
@@ -414,7 +414,7 @@ class Plugin
                 $event['status'] = 'error';
                 $event['status_text'] = 'Error Code '.$result['faultcode'].': '.$result['fault'];
             } else {
-                $GLOBALS['tf']->history->add($settings['TABLE'], 'change_ip', $event['newip'], $serviceClass->getId(), $serviceClass->getCustid());
+                \MyAdmin\App::history()->add($settings['TABLE'], 'change_ip', $event['newip'], $serviceClass->getId(), $serviceClass->getCustid());
                 $serviceClass->set_ip($event['newip'])->save();
                 $event['status'] = 'ok';
                 $event['status_text'] = 'The IP Address has been changed.';
@@ -429,7 +429,7 @@ class Plugin
     public static function getMenu(GenericEvent $event)
     {
         $menu = $event->getSubject();
-        if ($GLOBALS['tf']->ima == 'admin') {
+        if (\MyAdmin\App::ima() == 'admin') {
             $menu->add_link(self::$module, 'choice=none.reusable_pleskautomation', '/images/myadmin/to-do.png', _('ReUsable PleskAutomation Licenses'));
             $menu->add_link(self::$module, 'choice=none.pleskautomation_list', '/images/myadmin/to-do.png', _('PleskAutomation Licenses Breakdown'));
             $menu->add_link(self::$module.'api', 'choice=none.pleskautomation_licenses_list', '/images/whm/createacct.gif', _('List all PleskAutomation Licenses'));

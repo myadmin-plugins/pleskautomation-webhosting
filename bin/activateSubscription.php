@@ -4,7 +4,7 @@ include_once __DIR__.'/../../../../include/functions.inc.php';
 $ppaConnector = get_webhosting_ppa_instance();
 // let us form an array with account data
 $password = _randomstring(10);
-$data = $GLOBALS['tf']->accounts->read(2773);
+$data = \MyAdmin\App::accounts()->read(2773);
 [$first, $last] = explode(' ', $data['name']);
 $accountId = 127;
 $serviceTemplateId = 24;
