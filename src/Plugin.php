@@ -102,6 +102,8 @@ class Plugin
             } catch (\Exception $e) {
                 echo 'Caught exception: '.$e->getMessage().PHP_EOL;
                 myadmin_log(self::$module, 'info', 'addAccount Caught exception: '.$e->getMessage(), __LINE__, __FILE__, self::$module, $serviceClass->getId());
+                $event['success'] = false;
+                chatNotify('Failed [Website '.$serviceClass->getId().'](https://my.interserver.net/admin/view_website?id='.$serviceClass->getId().') PleskAutomation Activation - addAccount exception: '.$e->getMessage(), 'notifications');
             }
             request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'addAccount', $request, $result, $serviceClass->getId());
             $accountId = $result['result']['account_id'];
@@ -131,6 +133,8 @@ class Plugin
             } catch (\Exception $e) {
                 echo 'Caught exception: '.$e->getMessage().PHP_EOL;
                 myadmin_log(self::$module, 'info', 'addAccountMember Caught exception: '.$e->getMessage(), __LINE__, __FILE__, self::$module, $serviceClass->getId());
+                $event['success'] = false;
+                chatNotify('Failed [Website '.$serviceClass->getId().'](https://my.interserver.net/admin/view_website?id='.$serviceClass->getId().') PleskAutomation Activation - addAccountMember exception: '.$e->getMessage().' (AccountId: '.$accountId.')', 'notifications');
             }
             request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'addAccountMember', $request, $result, $serviceClass->getId());
             $userId = $result['result']['user_id'];
@@ -150,6 +154,8 @@ class Plugin
             } catch (\Exception $e) {
                 echo 'Caught exception: '.$e->getMessage().PHP_EOL;
                 myadmin_log(self::$module, 'info', 'activatesubscription Caught exception: '.$e->getMessage(), __LINE__, __FILE__, self::$module, $serviceClass->getId());
+                $event['success'] = false;
+                chatNotify('Failed [Website '.$serviceClass->getId().'](https://my.interserver.net/admin/view_website?id='.$serviceClass->getId().') PleskAutomation Activation - activateSubscription exception: '.$e->getMessage().' (AccountId: '.$accountId.' Template: '.$serviceTemplateId.')', 'notifications');
             }
             request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'activateSubscription', $request, $result, $serviceClass->getId());
             $subscriptoinId = $result['result']['subscription_id'];
@@ -192,6 +198,8 @@ class Plugin
             } catch (\Exception $e) {
                 echo 'Caught exception: '.$e->getMessage().PHP_EOL;
                 myadmin_log(self::$module, 'info', 'createWebspace Caught exception: '.$e->getMessage(), __LINE__, __FILE__, self::$module, $serviceClass->getId());
+                $event['success'] = false;
+                chatNotify('Failed [Website '.$serviceClass->getId().'](https://my.interserver.net/admin/view_website?id='.$serviceClass->getId().') PleskAutomation Activation - createWebspace exception: '.$e->getMessage().' (SubscriptionId: '.$subscriptoinId.' Domain: '.$hostname.')', 'notifications');
             }
             request_log(self::$module, $serviceClass->getCustid(), __FUNCTION__, 'ppa', 'createWebspace', $request, $result, $serviceClass->getId());
             $webspaceId = $result['result']['webspace_id'];
@@ -207,6 +215,7 @@ class Plugin
                 add_output('Error Creating Website');
                 myadmin_log(self::$module, 'info', 'Failure, Response: '.var_export($result, true), __LINE__, __FILE__, self::$module, $serviceClass->getId());
                 $event['success'] = false;
+                chatNotify('Failed [Website '.$serviceClass->getId().'](https://my.interserver.net/admin/view_website?id='.$serviceClass->getId().') PleskAutomation Activation - createWebspace returned non-numeric webspaceId ('.var_export($webspaceId, true).') Hostname: '.$hostname.' Username: '.$username, 'notifications');
             }
             /*
               $request = array(
