@@ -1,6 +1,6 @@
 ---
 name: phpunit-tests
-description: Writes PHPUnit 9 test classes in `tests/` using the project's patterns: `ReflectionClass` for structure tests, `file_get_contents` for source inspection, `PPAConnector::checkResponse()` behavioral tests. Namespace `Detain\MyAdminPleskAutomation\Tests\`. Use when user says 'add tests', 'write test', 'test coverage'. Do NOT use for non-test PHP files. NOTE: for a plugin's contract/behavioral tests (tests/ContractTest.php, the shared harness, composer myadmin:scaffold-tests) use the plugin-contract-tests skill instead — this skill's reflection-only guidance predates that harness.
+description: Writes PHPUnit 9 test classes in `tests/` using the project's patterns: `ReflectionClass` for structure tests, `file_get_contents` for source inspection, `PPAConnector::checkResponse()` behavioral tests. Namespace `Detain\MyAdminPleskAutomation\Tests\`. Use when user says 'add tests', 'write test', 'test coverage'. Do NOT use for non-test PHP files. For a plugin's contract or behavioral tests (tests/ContractTest.php, the shared harness, composer myadmin:scaffold-tests) use the plugin-contract-tests skill instead — this skill's reflection-only guidance predates that harness.
 ---
 <!-- myadmin-contract-harness-notice -->
 > ### ⚠️ Read this before the rest of the file
