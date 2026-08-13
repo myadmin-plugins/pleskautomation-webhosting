@@ -77,7 +77,6 @@ php -l src/Plugin.php                        # lint a single file
 - Tests use `ReflectionClass`/`ReflectionProperty` for structure verification and `file_get_contents` for source inspection
 - PSR-4 autoloading; helper functions in `src/` are not namespaced classes
 
-<!-- caliber:managed:pre-commit -->
 ## Plugin contract harness
 
 This package is on the shared contract harness from `detain/myadmin-plugin-installer`.
@@ -100,6 +99,7 @@ contract class primes constants and calls `register_module()`, neither of which 
 See the `plugin-contract-tests` skill for the full workflow, and `docs/testing-harness.md` in
 the installer.
 
+<!-- caliber:managed:pre-commit -->
 ## Before Committing
 
 **IMPORTANT:** Before every git commit, you MUST ensure Caliber syncs agent configs with the latest code changes.
